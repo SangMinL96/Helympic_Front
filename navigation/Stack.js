@@ -9,13 +9,7 @@ export default function Stack({ isLogin }) {
     <Stack.Navigator
       mode="card"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "black",
-          borderBottomColor: "black",
-          shadowColor: "black",
-        },
-        headerTintColor: "white",
-        headerBackTitleVisible: false,
+        
       }}
     >
       {isLogin ? (
