@@ -1,38 +1,67 @@
-import React from 'react';
-
-import { Input, Button } from 'react-native-elements';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 import logo from '../../Image/logo.png';
 import loginBg from '../../Image/LoginBg.jpg';
 import { useForm, Controller } from 'react-hook-form';
 import TextInput from '../../component/TextInput';
+import Toast from 'react-native-toast-message';
+import { lengthPt, pwPt } from '../../component/Validate';
+import { Icon } from '@99xt/first-born';
+import { LOGIN_USER } from './Query';
+import { useMutation } from '@apollo/react-hooks';
+import AsyncStorage from '@react-native-community/async-storage';
+import { useLogIn } from '../../component/AuthProvider';
+export default function Login({ route, navigation }) {
+  const [loginMt] = useMutation(LOGIN_USER);
+  const { control, handleSubmit, setValue, errors, clearErrors } = useForm();
+  const onLogin = useLogIn();
 
-export default function Login({ navigation }) {
-  const { control, handleSubmit, errors } = useForm();
+  useEffect(() => {
+    if (Object.keys(errors).length >= 1) {
+      console.log(errors);
+      Toast.show({ text1: '빈칸을 확인해주세요.', type: 'error' });
+      clearErrors();
+    }
+    if (route?.params?.signUp === 'OK') {
+      Toast.show({ text1: '성공적으로 회원가입 되었습니다. 로그인 해주세요.' });
+      navigation.setParams({ signUp: '' });
+    }
+  }, [route, setValue, errors]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const rslt = await loginMt({ variables: { param: data } });
+      const userInfo = rslt.data.user;
+
+      onLogin(JSON.stringify(userInfo));
+      // navigation.navigate("Main")
+    } catch (err) {}
   };
+
   return (
     <LoginView>
       <LoginLogo source={logo} />
-      <SubTitle>모여서 운동하면 재미있다!</SubTitle>
-      <TextInput control={control} label={'아이디'} icon={'user'} name={'id'} />
-      <TextInput control={control} label={'비밀번호'} icon={'lock'} name={'pw'} />
-      <BtnBox>
-        <Button
-          titleStyle={{ fontWeight: 'bold' }}
-          containerStyle={{ width: '48%', marginTop: '5%' }}
-          title="로그인"
-          onPress={handleSubmit(onSubmit)}
-        />
-        <Button
-          titleStyle={{ fontWeight: 'bold' }}
-          containerStyle={{ width: '48%', marginTop: '5%' }}
-          title="회원가입"
-          onPress={() => navigation.navigate('SignUp')}
-        />
-      </BtnBox>
+      <SubTitle>운동하자!</SubTitle>
+      <Icon name="heart" color="red" />
+      <InputView>
+        <TextInput control={control} label={'아이디'} name={'id'} rule={true} />
+        <TextInput control={control} label={'비밀번호'} name={'pw'} pwType={true} rule={true} />
+        <BtnBox>
+          <Button
+            titleStyle={{ fontWeight: 'bold' }}
+            containerStyle={{ width: '48%', marginTop: '5%' }}
+            title="로그인"
+            onPress={handleSubmit(onSubmit)}
+          />
+          <Button
+            titleStyle={{ fontWeight: 'bold' }}
+            containerStyle={{ width: '48%', marginTop: '5%' }}
+            title="회원가입"
+            onPress={() => navigation.navigate('SignUp')}
+          />
+        </BtnBox>
+      </InputView>
     </LoginView>
   );
 }
@@ -43,8 +72,11 @@ const LoginView = styled.View`
   align-items: center;
 `;
 const LoginLogo = styled.Image``;
-const BtnBox = styled.View`
+const InputView = styled.View`
   width: 70%;
+`;
+const BtnBox = styled.View`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -1,11 +1,32 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { createStackNavigator, create } from '@react-navigation/stack';
 import Login from '../page/login/Login';
 import logo from '../Image/logo.png';
 import Main from '../page/main/Main';
 import SignUp from '../page/login/SignUp';
 import styled from 'styled-components/native';
-export default function Stack({ isLogin }) {
+import Tabs from './Tebs';
+import { useIsLoggedIn, useLogIn, useLogOut } from '../component/AuthProvider';
+import AsyncStorage from '@react-native-community/async-storage';
+export default function Stack() {
+  const isLogined = useIsLoggedIn();
+  const onLogin = useLogIn();
+  const onLoginOut = useLogOut();
+  useEffect(() => {
+    onLogihState();
+  }, [onLogihState]);
+
+  const onLogihState = async () => {
+    try {
+      const result = await AsyncStorage.getItem('user');
+      const userInfo = JSON.parse(result);
+      if (userInfo?.token !== undefined) {
+        onLogin(JSON.stringify(userInfo));
+      } else {
+        onLoginOut();
+      }
+    } catch (err) {}
+  };
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
@@ -23,11 +44,11 @@ export default function Stack({ isLogin }) {
         headerBackTitleVisible: false
       }}
     >
-      {isLogin ? (
-        <Stack.Screen name="메인" component={Main} />
+      {isLogined ? (
+        <Stack.Screen name="Main" component={Tabs} />
       ) : (
         <>
-          <Stack.Screen name="로그인" component={Login} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={SignUp} />
         </>
       )}
