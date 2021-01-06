@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
+import { onUserInfo } from './utils'
 
 
 
 export const getToken = async (error, operation) => {
   if (error?.statusCode === 401) {
     try {
-    const user =await AsyncStorage.getItem("user")
-    const userId = JSON.parse(user).id
-    const token = await Axios.get('http://192.168.56.1:4000/getToken',{params:{id:userId}})
-    console.log(token.data)
+    const userInfo =await onUserInfo()
+    console.log(userInfo)
+    const token = await Axios.get('http://192.168.56.1:4000/getToken',{params:{id:userInfo?.id}})
       if (token?.data) {
        if(operation !==undefined){
          operation.setContext(({ headers = {} }) => ({

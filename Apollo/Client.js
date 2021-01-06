@@ -9,11 +9,8 @@ const httpLink = new HttpLink({
 });
 const retryLinks = new RetryLink({
   attempts: (count, operation, error) => {
-  
      const result = getToken(error,operation)
-      
       return result.then(res => (res === 'OK' ? true : false))
-    
   },
   delay: (count, operation, error) => {
     return count * 1000 * Math.random();

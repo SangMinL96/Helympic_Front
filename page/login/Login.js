@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 import logo from '../../Image/logo.png';
-import loginBg from '../../Image/LoginBg.jpg';
 import { useForm, Controller } from 'react-hook-form';
 import TextInput from '../../component/TextInput';
 import Toast from 'react-native-toast-message';
-import { lengthPt, pwPt } from '../../component/Validate';
 import { Icon } from '@99xt/first-born';
 import { LOGIN_USER } from './Query';
 import { useMutation } from '@apollo/react-hooks';
-import AsyncStorage from '@react-native-community/async-storage';
 import { useLogIn } from '../../component/AuthProvider';
 export default function Login({ route, navigation }) {
   const [loginMt] = useMutation(LOGIN_USER);
@@ -42,7 +39,7 @@ export default function Login({ route, navigation }) {
   return (
     <LoginView>
       <LoginLogo source={logo} />
-      <SubTitle>운동하자!</SubTitle>
+      <SubTitle>헬림픽</SubTitle>
       <Icon name="heart" color="red" />
       <InputView>
         <TextInput control={control} label={'아이디'} name={'id'} rule={true} />

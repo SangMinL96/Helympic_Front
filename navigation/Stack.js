@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { createStackNavigator, create } from '@react-navigation/stack';
 import Login from '../page/login/Login';
 import logo from '../Image/logo.png';
-import Main from '../page/main/Main';
+
 import SignUp from '../page/login/SignUp';
 import styled from 'styled-components/native';
 import Tabs from './Tebs';
 import { useIsLoggedIn, useLogIn, useLogOut } from '../component/AuthProvider';
 import AsyncStorage from '@react-native-community/async-storage';
+import { onUserInfo } from '../component/utils';
 export default function Stack() {
   const isLogined = useIsLoggedIn();
   const onLogin = useLogIn();
@@ -18,8 +19,7 @@ export default function Stack() {
 
   const onLogihState = async () => {
     try {
-      const result = await AsyncStorage.getItem('user');
-      const userInfo = JSON.parse(result);
+      const userInfo = await onUserInfo()
       if (userInfo?.token !== undefined) {
         onLogin(JSON.stringify(userInfo));
       } else {
@@ -45,7 +45,7 @@ export default function Stack() {
       }}
     >
       {isLogined ? (
-        <Stack.Screen name="Main" component={Tabs} />
+        <Stack.Screen name="Tebs" component={Tabs}  />
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />

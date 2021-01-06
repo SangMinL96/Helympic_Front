@@ -13,7 +13,7 @@ const TEST_DD = gql`
   }
 `;
 
-function MyDetail({ navigation }) {
+function Profile({ navigation }) {
   useEffect(() => {
    
   }, []);
@@ -23,10 +23,10 @@ function MyDetail({ navigation }) {
   const loginOut = useLogOut();
   return (
     <View>
-      <Text onPress={() => testMt({ variables: { test: 'sadfasd' } })}>sdfsdafa</Text>
+      <Text onPress={() => testMt({ variables: { test: "342342" } })}>sdfsdafa</Text>
       <Text onPress={loginOut}>아웃</Text>
     </View>
   );
 }
 
-export default MyDetail;
+export default Profile;
