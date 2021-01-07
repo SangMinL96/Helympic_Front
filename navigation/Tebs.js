@@ -7,19 +7,21 @@ import Search from '../page/main/search/Index';
 import Popularity from '../page/main/popularity/Index';
 import RoomCreate from '../page/main/roomcreate/Index';
 import headerLogo from '../Image/headerLogo.png';
-import { Image  } from 'react-native';
-import { View } from 'react-native';
+import headerTitle from '../Image/headerTitle.png';
+import { Image ,View } from 'react-native';
+import styled from "styled-components/native"
 
-
+ 
 const Tab = createMaterialBottomTabNavigator();
 
 function Tebs({navigation}) {
   useEffect(() => {
       navigation.setOptions({
         headerLeft:()=>(
-          <View>
-          <Image  source={headerLogo} />
-          </View>
+          <HeaderView>
+            <Image  source={headerLogo} />
+            <Image  source={headerTitle} />
+          </HeaderView>
         )
       })
   }, []);
@@ -84,3 +86,16 @@ function Tebs({navigation}) {
 }
 
 export default Tebs;
+
+const HeaderView =styled.View`
+flex-direction:row;
+justify-content: center;
+align-items: center;
+margin-left: 10px;
+`
+const HeaderText =styled.Text`
+margin-left: 10px;
+font-size: 20px;
+font-weight: 700;
+
+`

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { createStackNavigator, create } from '@react-navigation/stack';
 import Login from '../page/login/Login';
 import logo from '../Image/logo.png';
-
 import SignUp from '../page/login/SignUp';
 import styled from 'styled-components/native';
 import Tabs from './Tebs';
 import { useIsLoggedIn, useLogIn, useLogOut } from '../component/AuthProvider';
 import AsyncStorage from '@react-native-community/async-storage';
 import { onUserInfo } from '../component/utils';
+import Profile from '../page/main/profile/Index';
 export default function Stack() {
   const isLogined = useIsLoggedIn();
   const onLogin = useLogIn();
@@ -35,17 +35,20 @@ export default function Stack() {
       screenOptions={{
         title: '',
         cardStyle: {
-          backgroundColor: '#f1f2f6'
-        },
-        headerStyle: {
           backgroundColor: '#f1f2f6',
-          shadowColor: 'black'
+        },
+        
+        headerStyle: {
+          backgroundColor: '#b5c3d1',
+          shadowColor: 'black',
         },
         headerBackTitleVisible: false
       }}
     >
       {isLogined ? (
+        <>
         <Stack.Screen name="Tebs" component={Tabs}  />
+        </>
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />

@@ -5294,10 +5294,10 @@ react-native-awesome-alerts@^1.4.2:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-elements@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.0.1.tgz#e754d5fdfb207168d053a60771aec91e5771b116"
-  integrity sha512-L4ZzXJqX3LeLREA50uLIwKQv4kcVRX/j1IYV3mwtBzG9CgRKK2e8b/yPQR4ysw1Le2IyxThCH1zynlCUemL5Hg==
+react-native-elements@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.1.0.tgz#ff2d6fd0ed91b1ebdd15598c4da1fcb2d5780c5f"
+  integrity sha512-U4CuyO+q2JlduPht4P0xz+oIbw3W53uYPpkMqvlwjJiVoFfwnpbAu+JZL01/7VMe98G4Y8nJImcBh7zK9cb3Uw==
   dependencies:
     "@types/react-native-vector-icons" "^6.4.6"
     color "^3.1.2"

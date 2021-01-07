@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useLogOut } from '../../../component/AuthProvider';
+import styled from "styled-components/native"
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import axios from 'axios';
@@ -22,11 +23,16 @@ function Profile({ navigation }) {
 
   const loginOut = useLogOut();
   return (
-    <View>
+    <ProfileScreen >
       <Text onPress={() => testMt({ variables: { test: "342342" } })}>sdfsdafa</Text>
       <Text onPress={loginOut}>아웃</Text>
-    </View>
+    </ProfileScreen>
   );
 }
 
 export default Profile;
+
+const ProfileScreen =styled.View`
+${(props) => props.theme.screen};
+background-color: #d1d8e0;
+`

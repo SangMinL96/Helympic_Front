@@ -7,24 +7,20 @@ import styled from 'styled-components/native';
 import logo from '../../../Image/logo.png';
 import { Avatar } from 'react-native-elements';
 import RoomContainer from '../../../component/RoomContainer';
-import AllRoom from './AllRoom';
 
-function Home({ navigation }) {
- const test =[{id:"1"},{id:"2"}]
+function AllRoom({ test }) {
   useEffect(() => {}, []);
 
+  const onAvatarClick =(ev)=>{
+    console.log(test)
+  }
+  const onListClick =(ev)=>{
+    const id =ev.target
+    console.log("리스트",id)
+  }
   return (
-    <HomeScreen>
-      <ScrollView>
-      {test.map(item=><AllRoom test={item.id}/>)}
-      </ScrollView>
-     
-    </HomeScreen>
+     <RoomContainer  title={"테스트"} onAvatarClick={onAvatarClick}onListClick={onListClick} />
   );
 }
 
-export default Home;
-const HomeScreen = styled.View`
-  ${(props) => props.theme.screen};
-  background-color: #b5c3d1;
-`;
+export default AllRoom;
