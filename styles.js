@@ -7,10 +7,10 @@ export default {
   blueColor: '#3897f0',
   darkBlueColor: '#003569',
   whiteColor:'#dfe4ea',
+  backColor:'#ebebee',
   screen: ` 
   flex: 1;
   alignItems: center;
   padding:3%; 
-  
   `
 };

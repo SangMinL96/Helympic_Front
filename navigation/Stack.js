@@ -39,7 +39,7 @@ export default function Stack() {
         },
         
         headerStyle: {
-          backgroundColor: '#b5c3d1',
+          backgroundColor: "white",
           shadowColor: 'black',
         },
         headerBackTitleVisible: false
