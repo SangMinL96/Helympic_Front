@@ -3,7 +3,6 @@ import { Image } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
-
 import RoomDetail from '../../../../component/RoomDetail';
 import RoomList from '../../../../component/RoomList';
 
@@ -16,7 +15,6 @@ function AllRoom({ test }) {
   }
   const onListClick =(ev)=>{
     const id =ev.target
-    console.log("리스트",id)
     setOpen(true)
   }
   return (

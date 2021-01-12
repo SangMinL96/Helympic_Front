@@ -5,10 +5,7 @@ import styled from 'styled-components/native';
 import { View, Text } from 'react-native';
 import TagChip from './TagChip';
 
-function RoomDetail({ open, setOpen }) {
-
-
-
+function RoomDetail({navigation, open, setOpen }) {
   return (
     <>
       <View>
@@ -27,33 +24,27 @@ function RoomDetail({ open, setOpen }) {
               </ListItem>
             </DtlDescView>
             <DtlTagView>
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-
-               <TagChip />
-               <TagChip />
-               <TagChip />
-
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
-               <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
+              <TagChip />
             </DtlTagView>
             <DtlBtnView>
-              <Button titleStyle={{ fontWeight: 'bold' }} containerStyle={{ width: '48%' }} title="참가 신청" />
+              <Button
+                titleStyle={{ fontWeight: 'bold' }}
+                buttonStyle={{ height: 35 }}
+                containerStyle={{ width: '48%' }}
+                title="참가 신청"
+                // loading={false}
+              />
               <Button
                 titleStyle={{ fontWeight: 'bold' }}
                 containerStyle={{ width: '48%' }}
-                buttonStyle={{ backgroundColor: 'red' }}
+                buttonStyle={{ height: 35, backgroundColor: 'red' }}
                 title="참가 취소"
               />
             </DtlBtnView>

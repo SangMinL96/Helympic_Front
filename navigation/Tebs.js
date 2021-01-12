@@ -18,15 +18,16 @@ const Tab = createMaterialBottomTabNavigator();
 
 function Tebs({navigation}) {
   useEffect(() => {
+   
       navigation.setOptions({
         headerLeft:()=>(
           <HeaderView>
-            <Image  source={headerLogo} />
+            <Image source={require('../Image/headericon.png')} />
             <Image  source={headerTitle} />
           </HeaderView>
         )
       })
-  }, []);
+  }, [navigation]);
 
   return (
     <Tab.Navigator
@@ -36,6 +37,7 @@ function Tebs({navigation}) {
       barStyle={{ backgroundColor: '#353b48' }}
       shifting={true}
       labeled={false}
+    
     >
       <Tab.Screen
         name="Home"
@@ -90,10 +92,6 @@ flex-direction:row;
 justify-content: center;
 align-items: center;
 margin-left: 10px;
-`
-const HeaderText =styled.Text`
-margin-left: 10px;
-font-size: 20px;
-font-weight: 700;
-
+height: 30px;
+;
 `
