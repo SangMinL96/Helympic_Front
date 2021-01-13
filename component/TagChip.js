@@ -3,11 +3,11 @@ import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import styled from "styled-components/native"
 
-function TagChip() {
+function TagChip({children  ,text,onPress}) {
   return (
- <TouchableOpacity>
-
-     <TagText>#여행</TagText>
+   <TouchableOpacity onPress={onPress}>
+     <TagText>{text}{children}</TagText>
+   
    </TouchableOpacity>
   );
 }
@@ -15,10 +15,12 @@ function TagChip() {
 export default TagChip;
 
 const TagText = styled.Text`
-
-font-size: 12px;
-border:1px solid #030303;
-  padding: 1px 7px 1px 7px;
+position: relative;
+font-size: 13px;
+height:25px;
+border:1px solid #1f1f1f;
+background-color: white;
+  padding: 2.5px 9px 3px 12px;
   border-radius: 50px;
   margin-left: 5px;
   margin-bottom: 5px;

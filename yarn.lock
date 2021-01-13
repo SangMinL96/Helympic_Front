@@ -5294,6 +5294,11 @@ react-native-awesome-alerts@^1.4.2:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-chips@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-chips/-/react-native-chips-2.4.0.tgz#f1bc76ba9f50753f190fdb2e3b36b932d6fd3df0"
+  integrity sha512-QLA1f5/Jvf+iu/Lp8kWv3O4SfnAwvxQdEWUTMt1T/0nyRVqR29nR5HcjlBwz0JLzd74KCXIRmpvDtIp9P0uyIQ==
+
 react-native-elements@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.1.0.tgz#ff2d6fd0ed91b1ebdd15598c4da1fcb2d5780c5f"
@@ -5348,6 +5353,13 @@ react-native-ratings@^7.3.0:
   dependencies:
     lodash "^4.17.15"
     prop-types "^15.7.2"
+
+react-native-reanimated@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.13.2.tgz#1ae5457b24b4913d173a5a064bb28eae7783d293"
+  integrity sha512-O+WhgxSjOIzcVdAAvx+h2DY331Ek1knKlaq+jsNLpC1fhRy9XTdOObovgob/aF2ve9uJfPEawCx8381g/tUJZQ==
+  dependencies:
+    fbjs "^1.0.0"
 
 react-native-safe-area-context@3.1.9, react-native-safe-area-context@^3.1.9:
   version "3.1.9"

@@ -37,9 +37,9 @@ export default function Login({ route, navigation }) {
   };
 
   return (
-    <LoginView>
-      <LoginLogo source={logo} />
-      <SubTitle>헬림픽</SubTitle>
+    <View>
+      <Logo source={logo} />
+      <Title>헬림픽</Title>
       <Icon name="heart" color="red" />
       <InputView>
         <TextInput control={control} label={'아이디'} name={'id'} rule={true} />
@@ -59,16 +59,16 @@ export default function Login({ route, navigation }) {
           />
         </BtnBox>
       </InputView>
-    </LoginView>
+    </View>
   );
 }
 
-const LoginView = styled.View`
+const View = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
 `;
-const LoginLogo = styled.Image``;
+const Logo = styled.Image``;
 const InputView = styled.View`
   width: 70%;
 `;
@@ -78,7 +78,7 @@ const BtnBox = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
-const SubTitle = styled.Text`
+const Title = styled.Text`
   font-size: 18px;
   font-weight: bold;
   color: #4b4b4b;
