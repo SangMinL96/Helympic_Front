@@ -22,15 +22,15 @@ export default function Stack() {
   const onLoginOut = useLogOut();
 
   useEffect(() => {
-   
     onLogihState();
   }, [onLogihState]);
 
   const onLogihState = async () => {
     try {
       const userInfo = await onUserInfo()
-      if (userInfo?.token !== undefined) {
-        onLogin(JSON.stringify(userInfo));
+      const cryptoInfo = JSON.parse(userInfo)
+      if (cryptoInfo?.token !== undefined) {
+        onLogin(cryptoInfo);
       } else {
         onLoginOut();
       }

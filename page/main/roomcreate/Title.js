@@ -35,7 +35,7 @@ function Title() {
             label="타이틀을 입력해주세요."
             labelStyle={{color:"white"}}
             onChangeText={(ev)=>setTitle(ev)}
-            leftIcon={<Icon name="account-outline" size={30} color={"white"} />}
+            leftIcon={<Icon name="robot" size={30} color={"white"} />}
           />
       </RoomCreateBg>
     </RoomCreateView>

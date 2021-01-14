@@ -1,30 +1,36 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import { onUserInfo } from './utils'
-
+import CryptoJS from "react-native-crypto-js";
+import { HASH_KEY } from '../config';
 
 
 export const getToken = async (error, operation) => {
   if (error?.statusCode === 401) {
     try {
-    const userInfo =await onUserInfo()
-    console.log(userInfo)
-    const token = await Axios.get('http://192.168.56.1:4000/getToken',{params:{id:userInfo?.id}})
+      const userInfo = await onUserInfo()
+      if(userInfo){
+      const cryptoInfo = JSON.parse(userInfo)
+      const token = await Axios.get('http://192.168.56.1:4000/getToken',{params:{id:cryptoInfo?.id}})
       if (token?.data) {
        if(operation !==undefined){
          operation.setContext(({ headers = {} }) => ({
           headers: { ...headers, Authorization: `Bearer ${token.data}` || null },
         }))
        } 
-       await AsyncStorage.mergeItem("user",JSON.stringify({token: token.data }))
+      const newInfo = {...cryptoInfo,token:token.data}
+      const newInfoHash = await CryptoJS.AES.encrypt(JSON.stringify(newInfo), HASH_KEY).toString()
+      await AsyncStorage.setItem("user", newInfoHash);
         return 'OK'
       } else {
         await AsyncStorage.removeItem("user")
       }
+     }
     } catch (e) {
       console.log(e)
       await AsyncStorage.removeItem("user")
     }
+    
 }
 }
 

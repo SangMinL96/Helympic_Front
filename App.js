@@ -1,3 +1,4 @@
+
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -7,13 +8,11 @@ import { ThemeProvider } from "styled-components";
 import Toast from 'react-native-toast-message';
 import Stack from './navigation/Stack';
 import Client from './Apollo/Client';
-
 import { AuthProvider, useIsLoggedIn,useLogIn,useLogOut } from './component/AuthProvider';
 import styles from './styles';
 
 
 export default function App() {
-
   return (
     <ApolloProvider client={Client}>
       <ThemeProvider theme={styles}>

@@ -36,7 +36,7 @@ function Desc({route}) {
             label="방의 설명을 입력해주세요."
             labelStyle={{color:"white"}}
             onChangeText={(ev)=>setDesc(ev)}
-            leftIcon={<Icon name="account-outline" size={30} color={"white"} />}
+            leftIcon={<MaterialCommunityIcons name="form-select" color={'white'} size={26} />}
           />
       </RoomCreateBg>
     </RoomCreateView>

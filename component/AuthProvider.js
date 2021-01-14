@@ -1,25 +1,20 @@
 import React, { createContext, useContext, useState } from "react";
 import {   useMutation } from '@apollo/react-hooks';
 import {gql} from "apollo-boost"
-
+import CryptoJS from "react-native-crypto-js";
 import { AppLoading } from "expo";
 import AsyncStorage from "@react-native-community/async-storage";
+import { HASH_KEY } from "../config";
 
-const GET_TOKENED = gql`
-mutation getToken( $id: String!) {
-  getToken(id: $id) {
-    scalar
-  }
-}
-`;
 export const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+
   const logUserIn = async (userInfo) => {
     try {
-      await AsyncStorage.setItem("user", userInfo);
+      const info = await CryptoJS.AES.encrypt(JSON.stringify(userInfo), HASH_KEY).toString()
+      await AsyncStorage.setItem("user", info);
       setIsLoggedIn(true);
     } catch (e) {
       console.log(e);

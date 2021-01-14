@@ -5299,6 +5299,11 @@ react-native-chips@^2.4.0:
   resolved "https://registry.yarnpkg.com/react-native-chips/-/react-native-chips-2.4.0.tgz#f1bc76ba9f50753f190fdb2e3b36b932d6fd3df0"
   integrity sha512-QLA1f5/Jvf+iu/Lp8kWv3O4SfnAwvxQdEWUTMt1T/0nyRVqR29nR5HcjlBwz0JLzd74KCXIRmpvDtIp9P0uyIQ==
 
+react-native-crypto-js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-crypto-js/-/react-native-crypto-js-1.0.0.tgz#e677e022e147f41b35614416c92d655f87e2450a"
+  integrity sha512-FNbLuG/HAdapQoybeZSoes1PWdOj0w242gb+e1R0hicf3Gyj/Mf8M9NaED2AnXVOX01b2FXomwUiw1xP1K+8sA==
+
 react-native-elements@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.1.0.tgz#ff2d6fd0ed91b1ebdd15598c4da1fcb2d5780c5f"

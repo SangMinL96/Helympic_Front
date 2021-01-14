@@ -2,6 +2,7 @@ import { ApolloClient, HttpLink, ApolloLink, InMemoryCache } from '@apollo/clien
 import AsyncStorage from '@react-native-community/async-storage';
 import {getToken} from "../component/getToken"
 import { RetryLink } from 'apollo-link-retry';
+import { onUserInfo } from '../component/utils';
 
 
 const httpLink = new HttpLink({
@@ -17,16 +18,18 @@ const retryLinks = new RetryLink({
   },
 });
 const authMiddleware = new ApolloLink(async(operation, forward) => {
-  const result =await AsyncStorage.getItem("user")
-  const userInfo = JSON.parse(result)
-  const token = userInfo?.token
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      Authorization: `Bearer ${token}`
-    }
-  }));
 
+  let userInfo = await onUserInfo()
+  if(userInfo){
+    const token = JSON.parse(userInfo)?.token
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${token}`
+      }
+    }));
+  
+  }
   return forward(operation);
 });
 

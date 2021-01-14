@@ -7,6 +7,8 @@ import { Card } from 'react-native-elements';
 
 function RoomCreate() {
   const navigation = useNavigation();
+
+
   return (
     <RoomCreateView>
       <RoomCreateBg resizeMode="stretch" source={require('../../../Image/poster2.jpg')}></RoomCreateBg>
