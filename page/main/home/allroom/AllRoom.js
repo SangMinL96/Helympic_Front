@@ -6,31 +6,43 @@ import styled from 'styled-components/native';
 import RoomDetail from '../../../../component/RoomDetail';
 import RoomList from '../../../../component/RoomList';
 
-function AllRoom({ test }) {
-  const [open,setOpen] = useState(false)
+function AllRoom({ id, title,uCount, desc,rDate, tag, masterid, name }) {
+  const [open, setOpen] = useState(false);
   useEffect(() => {}, []);
 
-  const onAvatarClick =(ev)=>{
-    console.log(test)
-  }
-  const onListClick =(ev)=>{
-    const id =ev.target
-    setOpen(true)
-  }
+  const onAvatarClick = (ev) => {
+    console.log(test);
+  };
+  const onListClick = (ev) => {
+    const id = ev.target;
+    setOpen(true);
+  };
+
   return (
     <>
-      <RoomList  title={"테스트"} onAvatarClick={onAvatarClick}onListClick={onListClick} />
-     {open ?  <RoomDetail test={test} open={open} setOpen={setOpen}/> :null}
-     </>
+      <RoomList
+        title={title}
+        tag={tag}
+        uCount={uCount}
+        onAvatarClick={onAvatarClick}
+        onListClick={onListClick}
+      />
+      {open ? (
+        <RoomDetail
+          id={id}
+          name={name}
+          rDate={rDate}
+          title={title}
+          desc={desc}
+          tag={tag}
+          masterid={masterid}
+          uCount={uCount}
+          open={open}
+          setOpen={setOpen}
+        />
+      ) : null}
+    </>
   );
 }
 
 export default AllRoom;
-const RoomListView = styled.View`
-  flex: 1;
-  background-color: red;
-  margin-top: 10px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;

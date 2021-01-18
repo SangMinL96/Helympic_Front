@@ -1,7 +1,7 @@
 import React from 'react';
 import {  TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-function RoomList({title, onAvatarClick, onListClick }) {
+function RoomList({title, tag,uCount, onListClick }) {
   return (
     <RoomListScreen>
       <TouchableOpacity  onPress={onListClick}>
@@ -10,8 +10,8 @@ function RoomList({title, onAvatarClick, onListClick }) {
       <RoomListView>
         <TouchableOpacity onPress={onListClick}>
           <ListTitle>{title}</ListTitle>
-          <ListText>#여행 #여행 #여행</ListText>
-          <ListText>30명</ListText>
+          <ListText>{tag}</ListText>
+          <ListText>{String(uCount)}명</ListText>
         </TouchableOpacity>
       </RoomListView>
     </RoomListScreen>

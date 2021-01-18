@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { useLogIn } from '../../component/AuthProvider';
 
 export default function Login({ route, navigation }) {
+  const [logLoading,setLogLoading]=useState(false)
   const [loginMt] = useMutation(LOGIN_USER);
   const { control, handleSubmit, setValue, errors, clearErrors } = useForm();
   const onLogin = useLogIn();
@@ -29,10 +30,13 @@ export default function Login({ route, navigation }) {
   }, [route, setValue, errors]);
 
   const onSubmit = async (data) => {
+    setLogLoading(true)
     try {
       const rslt = await loginMt({ variables: { param: data } });
       const userInfo = rslt.data.user;
-   
+      if(userInfo){
+        setLogLoading(false)
+      }
      onLogin(userInfo);
     
       // navigation.navigate("Main")
@@ -52,6 +56,7 @@ export default function Login({ route, navigation }) {
             titleStyle={{ fontWeight: 'bold' }}
             containerStyle={{ width: '48%', marginTop: '5%' }}
             title="로그인"
+            loading={logLoading}
             onPress={handleSubmit(onSubmit)}
           />
           <Button

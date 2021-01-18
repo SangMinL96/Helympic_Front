@@ -5,33 +5,27 @@ import styled from 'styled-components/native';
 import { View, Text } from 'react-native';
 import TagChip from './TagChip';
 
-function RoomDetail({navigation, open, setOpen }) {
+function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen,uCount }) {
+
   return (
     <>
       <View>
         <Overlay style={{ width: '80%' }} isVisible={open} onBackdropPress={() => setOpen(false)}>
           <RoomDtlView>
-            <DtlTitle>Hello from Overlay!</DtlTitle>
+            <DtlTitle>{title}</DtlTitle>
             <DtlDescView>
-              <DtlText>개설일 : 2020.09.09</DtlText>
-              <DtlText>참여 인원 : 40명 | 평균 연령 : 25세</DtlText>
+              <DtlText>개설일 : {rDate}</DtlText>
+              <DtlText>참여 인원 : {String(uCount)}명 | 평균 연령 : 25세</DtlText>
               <ListItem bottomDivider>
                 <RoomAvatar resizeMode="stretch" source={require('../Image/logo.png')} />
                 <ListItem.Content>
-                  <DtlBoldText>수원 대장</DtlBoldText>
+                  <DtlBoldText>{name}</DtlBoldText>
                   <DtlText>방장</DtlText>
                 </ListItem.Content>
               </ListItem>
             </DtlDescView>
             <DtlTagView>
-              <TagChip />
-              <TagChip />
-              <TagChip />
-              <TagChip />
-              <TagChip />
-              <TagChip />
-              <TagChip />
-              <TagChip />
+               {tag ?tag?.split(",").map((text,index)=><TagChip key={index} text={text}/>):null}
             </DtlTagView>
             <DtlBtnView>
               <Button

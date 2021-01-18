@@ -6,14 +6,22 @@ import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReactChipsInput from 'react-native-chips';
 import TagChip from '../../../component/TagChip';
+import {  useMutation } from '@apollo/react-hooks';
+import { SAVE_ROOM } from './Query';
+
+
 function HashTag({ route }) {
+  const [saveMt] = useMutation(SAVE_ROOM);
   const navigation = useNavigation();
-  const [createData, setCreateData] = useState(route.params);
+  const [createData, setCreateData] = useState({...route.params,tag:""});
   const [chip, setChip] = useState([]);
   const chipId = useRef(1)
 
   useEffect(() => {
-    
+   if(chip?.length > 0){
+     chip.map(item=>setCreateData(props=>({...props,tag:props.tag+item.chips})))
+   }
+
     navigation.setOptions({
       header: () => {}
     });
@@ -22,9 +30,21 @@ function HashTag({ route }) {
 
   const onSetChip = (chips)=>{
     setChip((props) => props?.concat({ id: chipId.current, chips: `#${chips}` }))
+    
     chipId.current += 1;
-
   }
+
+ 
+const onSubmit = async() => {
+      try {
+        const rslt = await saveMt({ variables: { param: {...createData,masterid:""} } });
+        console.log(rslt)
+        if (rslt?.data?.saveRoom?.rslt === 'OK') {
+          navigation.navigate('Tebs')
+        }
+      } catch (err) {
+      }
+  };
   return (
     <RoomCreateView>
       <RoomCreateBg resizeMode="stretch" source={require('../../../Image/hashTagImg.jpg')}>
@@ -33,8 +53,8 @@ function HashTag({ route }) {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>해쉬 태그</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('HashTag')}>
-            <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
+          <TouchableOpacity onPress={onSubmit}>
+            <Text style={{ color: 'white', fontSize: 18 }}>생성</Text>
           </TouchableOpacity>
         </RoomCreateHeader>
         <TagView>
