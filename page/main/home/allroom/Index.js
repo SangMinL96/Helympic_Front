@@ -21,7 +21,6 @@ function AllRoomView({ navigation }) {
     getRoom();
   }, [getRoom]);
 
-  console.log(roomData);
   const wait = (timeout) => {
     return new Promise((resolve) => {
       setTimeout(resolve, timeout);
@@ -39,7 +38,7 @@ function AllRoomView({ navigation }) {
     <>
       {loading ? (
         <View style={{flex:1,justifyContent:"center"}}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0059ff" />
         </View>
       ) : (
         <AllRoomViewScreen>

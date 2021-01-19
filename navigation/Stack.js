@@ -14,6 +14,7 @@ import HashTag from '../page/main/roomcreate/HashTag';
 import { View } from 'react-native';
 import { Text } from 'react-native';
 import Title from '../page/main/roomcreate/Title';
+import Avatar from '../page/main/roomcreate/Avatar';
 
 
 export default function Stack() {
@@ -62,6 +63,7 @@ export default function Stack() {
           <Stack.Screen name="Tebs" component={Tabs}  />
           <Stack.Screen name="RoomCreate" component={RoomCreate} />
           <Stack.Screen name="Title" component={Title} />
+          <Stack.Screen name="Avatar" component={Avatar} />
           <Stack.Screen name="Desc" component={Desc} />
           <Stack.Screen name="HashTag" component={HashTag} />
         </>

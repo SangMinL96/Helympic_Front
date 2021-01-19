@@ -16,7 +16,7 @@ function RoomCreate() {
         <Card.Title style={{ color: 'white', marginTop: 5 }}>방 생성하기</Card.Title>
         <Card.Divider />
         <View style={{ alignItems: 'center', width: 200 }}>
-          <TouchableOpacity style={{ width: '100%' }} onPress={() => navigation.navigate('Title')}>
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => navigation.navigate('Avatar')}>
             <RoomCreateIcon resizeMode="contain" source={require('../../../Image/createicon.png')} />
           </TouchableOpacity>
         </View>

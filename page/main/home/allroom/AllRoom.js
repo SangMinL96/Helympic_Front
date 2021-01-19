@@ -6,13 +6,10 @@ import styled from 'styled-components/native';
 import RoomDetail from '../../../../component/RoomDetail';
 import RoomList from '../../../../component/RoomList';
 
-function AllRoom({ id, title,uCount, desc,rDate, tag, masterid, name }) {
+function AllRoom({ id, title, uCount, desc, rDate, tag, masterid, name }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {}, []);
 
-  const onAvatarClick = (ev) => {
-    console.log(test);
-  };
   const onListClick = (ev) => {
     const id = ev.target;
     setOpen(true);
@@ -20,13 +17,7 @@ function AllRoom({ id, title,uCount, desc,rDate, tag, masterid, name }) {
 
   return (
     <>
-      <RoomList
-        title={title}
-        tag={tag}
-        uCount={uCount}
-        onAvatarClick={onAvatarClick}
-        onListClick={onListClick}
-      />
+      <RoomList title={title} tag={tag} uCount={uCount} onListClick={onListClick} />
       {open ? (
         <RoomDetail
           id={id}
