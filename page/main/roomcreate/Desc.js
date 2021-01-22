@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 function Desc({route}) {
   const navigation = useNavigation();
   const [desc,setDesc] = useState()
+  const avatar = route.params.avatar;
   const title = route.params.title;
   useEffect(() => {
     navigation.setOptions({
@@ -25,7 +26,7 @@ function Desc({route}) {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>설명</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('HashTag',{title,desc})}>
+          <TouchableOpacity onPress={() => navigation.navigate('HashTag',{avatar,title,desc})}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>

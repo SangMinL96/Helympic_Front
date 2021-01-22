@@ -17,10 +17,11 @@ function AllRoomView({ navigation }) {
   const [getRoom, { data: roomData, loading }] = useLazyQuery(GET_ROOM, {
     fetchPolicy: 'network-only'
   });
+  
   useEffect(() => {
     getRoom();
   }, [getRoom]);
-
+  
   const wait = (timeout) => {
     return new Promise((resolve) => {
       setTimeout(resolve, timeout);
@@ -36,7 +37,7 @@ function AllRoomView({ navigation }) {
 
   return (
     <>
-      {loading ? (
+  {loading ? (
         <View style={{flex:1,justifyContent:"center"}}>
         <ActivityIndicator size="large" color="#0059ff" />
         </View>
@@ -54,6 +55,7 @@ function AllRoomView({ navigation }) {
                 name={item.name}
                 rDate={item.rDate}
                 uCount={item.uCount}
+                avatar={item.avatar}
               />
             ))}
           </ScrollView>

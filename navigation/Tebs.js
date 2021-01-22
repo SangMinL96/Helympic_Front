@@ -18,7 +18,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 function Tebs({navigation}) {
   useEffect(() => {
-   
+  
       navigation.setOptions({
         headerLeft:()=>(
           <HeaderView>
@@ -37,7 +37,6 @@ function Tebs({navigation}) {
       barStyle={{ backgroundColor: '#353b48' }}
       shifting={true}
       labeled={false}
-    
     >
       <Tab.Screen
         name="Home"

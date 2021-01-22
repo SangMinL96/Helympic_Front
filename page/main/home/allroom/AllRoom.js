@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import RoomDetail from '../../../../component/RoomDetail';
 import RoomList from '../../../../component/RoomList';
 
-function AllRoom({ id, title, uCount, desc, rDate, tag, masterid, name }) {
+function AllRoom({ id, title, uCount, avatar,desc, rDate, tag, masterid, name }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {}, []);
 
@@ -17,7 +17,7 @@ function AllRoom({ id, title, uCount, desc, rDate, tag, masterid, name }) {
 
   return (
     <>
-      <RoomList title={title} tag={tag} uCount={uCount} onListClick={onListClick} />
+      <RoomList title={title} avatar={avatar} tag={tag} uCount={uCount} onListClick={onListClick} />
       {open ? (
         <RoomDetail
           id={id}

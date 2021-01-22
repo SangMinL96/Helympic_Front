@@ -1,11 +1,12 @@
 import React from 'react';
 import {  TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-function RoomList({title, tag,uCount, onListClick }) {
+import { HOST_IP } from '../config';
+function RoomList({title, tag,uCount,avatar, onListClick }) {
   return (
     <RoomListScreen>
       <TouchableOpacity  onPress={onListClick}>
-        <RoomAvatar  resizeMode="stretch" source={require('../Image/logo.png')} />
+        <RoomAvatar  resizeMode="stretch" source={{uri:avatar?`${HOST_IP}image/?fn=${avatar}`:null}} />
       </TouchableOpacity>
       <RoomListView>
         <TouchableOpacity onPress={onListClick}>

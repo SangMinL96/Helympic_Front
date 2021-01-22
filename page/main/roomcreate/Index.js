@@ -2,11 +2,12 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import { Button } from 'react-native';
+
 import { Card } from 'react-native-elements';
 
 function RoomCreate() {
   const navigation = useNavigation();
+
 
 
   return (
@@ -50,8 +51,4 @@ const RoomCreateIcon = styled.Image`
   width: 100%;
   height: 100px;
   margin-bottom: 10px;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;

@@ -4,51 +4,33 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Button, Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Button, Input } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-function Avatar({route}) {
+function Avatar({ route }) {
   const navigation = useNavigation();
-  const [photo,setPhoto]=useState()
-  console.log(photo)
-
+  const [avatar, setAvatar] = useState();
   useEffect(() => {
     navigation.setOptions({
       header: () => {}
     });
   }, [navigation]);
+
   let openImagePickerAsync = async () => {
-    try{
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
+    try {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (permissionResult.granted === false) {
+        alert('카메라 앨범에 액세스할 수 있는 권한이 필요합니다!');
+        return;
+      }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-     await setPhoto(pickerResult);
-  }catch(err){
+      let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-    }
-  }
-
-
-
-  const onUpload =async () => {
-  try{
-      const formData = new FormData();
-      formData.append("photo", {
-        name: "test",
-        type: "image/jpeg",
-        uri: photo.uri
-      });
-    
-      await axios.post("http://192.168.56.1:4000/upload", formData,null);
-    }catch(err){
-      console.log(err)
-    }
+      await setAvatar(pickerResult);
+    } catch (err) {}
   };
+
   return (
     <RoomCreateView>
       <RoomCreateBg resizeMode="stretch" source={require('../../../Image/descImg.jpg')}>
@@ -56,23 +38,18 @@ function Avatar({route}) {
           <TouchableOpacity onPress={() => navigation.navigate('Tebs')}>
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
-          <Text style={{ color: 'white', fontSize: 18 }}>설명</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('HashTag',{title,desc})}>
+          <Text style={{ color: 'white', fontSize: 18 }}>이미지</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Title', { avatar })}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>
+        <RoomAvatar source={{ uri: avatar?.uri }} />
         <Button
-            titleStyle={{ fontWeight: 'bold' }}
-            containerStyle={{ width: '48%', marginTop: '5%' }}
-            title="파일"
-            onPress={openImagePickerAsync}
-          />
-              <Button
-            titleStyle={{ fontWeight: 'bold' }}
-            containerStyle={{ width: '48%', marginTop: '5%' }}
-            title="업로드"
-            onPress={onUpload}
-          />
+          titleStyle={{ fontWeight: 'bold' }}
+          containerStyle={{ width: '48%', marginTop: '5%' }}
+          title="방 이미지 선택"
+          onPress={openImagePickerAsync}
+        />
       </RoomCreateBg>
     </RoomCreateView>
   );
@@ -89,6 +66,12 @@ const RoomCreateBg = styled.ImageBackground`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+const RoomAvatar = styled.ImageBackground`
+  border-radius: 8px;
+  width: 120px;
+
+  height: 120px;
 `;
 const RoomCreateHeader = styled.View`
   width: 100%;

@@ -10,6 +10,7 @@ export const GET_ROOM = gql`
       name
       uCount
       rDate
+      avatar
     }
   }
 `;

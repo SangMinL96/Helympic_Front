@@ -3,10 +3,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {getToken} from "../component/getToken"
 import { RetryLink } from 'apollo-link-retry';
 import { onUserInfo } from '../component/utils';
+import { HOST_IP } from '../config';
 
 
 const httpLink = new HttpLink({
-  uri: `http://192.168.56.1:4000/`
+  uri: HOST_IP
 });
 const retryLinks = new RetryLink({
   attempts: (count, operation, error) => {
@@ -34,7 +35,19 @@ const authMiddleware = new ApolloLink(async(operation, forward) => {
 });
 
 export default new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          getRoomList: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    }
+  }),
   link: ApolloLink.from([authMiddleware,retryLinks, httpLink])
 });
  

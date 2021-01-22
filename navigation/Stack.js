@@ -30,8 +30,9 @@ export default function Stack() {
     try {
       const userInfo = await onUserInfo()
       const cryptoInfo = JSON.parse(userInfo)
-      if (cryptoInfo?.token !== undefined) {
+      if (cryptoInfo?.token) {
         onLogin(cryptoInfo);
+        
       } else {
         onLoginOut();
       }
@@ -55,8 +56,10 @@ export default function Stack() {
        
         },
         headerBackTitleVisible: false,
+       
       
       }}
+      
     >
       {isLogined ? (
         <>

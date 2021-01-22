@@ -9,6 +9,7 @@ import { Icon } from '@99xt/first-born';
 import { LOGIN_USER } from './Query';
 import { useMutation } from '@apollo/react-hooks';
 import { useLogIn } from '../../component/AuthProvider';
+import { onUserInfo } from '../../component/utils';
 
 export default function Login({ route, navigation }) {
   const [logLoading,setLogLoading]=useState(false)
@@ -17,7 +18,7 @@ export default function Login({ route, navigation }) {
   const onLogin = useLogIn();
 
   useEffect(() => {
-    
+
     if (Object.keys(errors).length >= 1) {
       console.log(errors);
       Toast.show({ text1: '빈칸을 확인해주세요.', type: 'error' });
@@ -28,6 +29,7 @@ export default function Login({ route, navigation }) {
       navigation.setParams({ signUp: '' });
     }
   }, [route, setValue, errors]);
+
 
   const onSubmit = async (data) => {
     setLogLoading(true)

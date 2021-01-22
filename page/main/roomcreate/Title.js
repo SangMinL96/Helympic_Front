@@ -6,10 +6,10 @@ import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-function Title() {
+function Title({route}) {
   const navigation = useNavigation();
   const [title,setTitle] = useState()
-
+  const avatar = route.params.avatar;
   useEffect(() => {
     navigation.setOptions({
       header: () => {}
@@ -24,7 +24,7 @@ function Title() {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>타이틀</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Desc',{title})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Desc',{avatar,title})}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>

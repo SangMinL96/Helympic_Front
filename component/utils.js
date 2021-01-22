@@ -3,12 +3,15 @@ import CryptoJS from "react-native-crypto-js";
 import { HASH_KEY } from "../config";
 export const onUserInfo =async()=>{
     try{
+        console.log("asdfsa")
     const result =await AsyncStorage.getItem("user")
-    console.log(result)
+ 
     if(result){
         let cryptoHash  =await CryptoJS.AES.decrypt(result,HASH_KEY);
         let userInfo = cryptoHash?.toString(CryptoJS.enc.Utf8);
         return userInfo
+    }else{
+        return null
     }
    
     }catch(err){

@@ -22,6 +22,7 @@ import {
 import { SAVE_USER, ID_CHECK, NAME_CHECK } from './Query';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks';
 import Toast from 'react-native-toast-message';
+import SelectInput from '../../component/SelectInput';
 export default function SignUp({ navigation }) {
   const [checkState, setCheckState] = useState({ id: false, name: false });
   const { control, handleSubmit, errors, clearErrors, getValues } = useForm();
@@ -45,6 +46,7 @@ export default function SignUp({ navigation }) {
   }, [errors]);
 
   const onSubmit = async (data) => {
+    console.log(data)
     if (checkState.id === true && checkState.name === true) {
       try {
         const rslt = await addMt({ variables: { param: data } });
@@ -141,15 +143,7 @@ export default function SignUp({ navigation }) {
             <InputText>중복 확인</InputText>
           </InputBtn>
         </InputBox>
-        <TextInput
-          control={control}
-          label={'휴대폰 번호'}
-          name={'hp'}
-          valid={hpValid}
-          errMsg={hpErr}
-          rule={true}
-          pt={hpPt}
-        />
+       <SelectInput    label={'생년월일'} control={control}  name={'age'} />
         <Button
           titleStyle={{ fontWeight: 'bold' }}
           containerStyle={{ marginTop: '5%' }}

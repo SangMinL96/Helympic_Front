@@ -6,7 +6,6 @@ import { View, Text } from 'react-native';
 import TagChip from './TagChip';
 
 function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen,uCount }) {
-
   return (
     <>
       <View>
@@ -25,7 +24,7 @@ function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen
               </ListItem>
             </DtlDescView>
             <DtlTagView>
-               {tag ?tag?.split(",").map((text,index)=><TagChip key={index} text={text}/>):null}
+               {tag ?tag?.split("#").filter(item=>item !=="").map((text,index)=><TagChip key={index} text={"#"+text}/>):null}
             </DtlTagView>
             <DtlBtnView>
               <Button
