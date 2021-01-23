@@ -1,18 +1,36 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Image } from 'react-native';
-import { ImageBackground } from 'react-native';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import styled from 'styled-components/native';
 import RoomDetail from '../../../../component/RoomDetail';
 import RoomList from '../../../../component/RoomList';
-
+import { useMutation } from '@apollo/react-hooks';
+import { SIGN_ROOM } from './Query';
+import Toast from 'react-native-toast-message';
 function AllRoom({ id, title, uCount, avatar,desc, rDate, tag, masterid, name }) {
   const [open, setOpen] = useState(false);
+
+  const [signRoomMt] = useMutation(SIGN_ROOM);
   useEffect(() => {}, []);
 
   const onListClick = (ev) => {
-    const id = ev.target;
     setOpen(true);
+  };
+  
+  const onSignRoom =async (id,btnState,setLoading) => {
+    setLoading(true)
+    try{
+      if(btnState ==="1"){
+        setLoading(false)
+      }else if(btnState ==="2"){
+
+      }else if(btnState ==="3"){
+        const rslt = await signRoomMt({ variables: { roomId: id } });
+        if(rslt?.data?.signRoom?.rslt ==="OK"){
+         Toast.show({ text1: '참가 신청 완료 되었습니다.' });
+         setOpen(false);
+        }
+      }
+    }catch(err){
+
+    }
   };
 
   return (
@@ -30,6 +48,7 @@ function AllRoom({ id, title, uCount, avatar,desc, rDate, tag, masterid, name })
           uCount={uCount}
           open={open}
           setOpen={setOpen}
+          onSignRoom={onSignRoom}
         />
       ) : null}
     </>

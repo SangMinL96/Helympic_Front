@@ -46,11 +46,11 @@ export default function Stack() {
       screenOptions={{
         title: '',
         cardStyle: {
-          backgroundColor: '#f1f2f6',
+          backgroundColor: '#ebebee',
         },
         
         headerStyle: {
-          backgroundColor: "white",
+          backgroundColor: "#ebebee",
           shadowColor: 'black',
           height: 105,
        

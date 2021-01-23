@@ -1,12 +1,7 @@
-import React, { createRef, useCallback, useEffect, useRef, useState } from 'react';
-import { Image } from 'react-native';
-import { ImageBackground } from 'react-native';
-
+import React, {  useCallback, useEffect,  useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
-import { Avatar } from 'react-native-elements';
 import AllRoom from './AllRoom';
-import { onUserInfo } from '../../../../component/utils';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { GET_ROOM } from './Query';
 import { RefreshControl } from 'react-native';
@@ -17,11 +12,11 @@ function AllRoomView({ navigation }) {
   const [getRoom, { data: roomData, loading }] = useLazyQuery(GET_ROOM, {
     fetchPolicy: 'network-only'
   });
-  
+
   useEffect(() => {
     getRoom();
   }, [getRoom]);
-  
+
   const wait = (timeout) => {
     return new Promise((resolve) => {
       setTimeout(resolve, timeout);
@@ -37,9 +32,9 @@ function AllRoomView({ navigation }) {
 
   return (
     <>
-  {loading ? (
-        <View style={{flex:1,justifyContent:"center"}}>
-        <ActivityIndicator size="large" color="#0059ff" />
+      {loading ? (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color="#0059ff" />
         </View>
       ) : (
         <AllRoomViewScreen>

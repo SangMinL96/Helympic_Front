@@ -9,9 +9,11 @@ const TopTab = createMaterialTopTabNavigator();
 function HomeTopTab() {
   return (
     <TopTab.Navigator
+    
       tabBarOptions={{
         showIcon: true,
-        showLabel: false
+        showLabel: false,  
+        style:{backgroundColor:"#ebebee"}
       }}
     >
       <TopTab.Screen

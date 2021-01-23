@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Button, Overlay, ListItem, Avatar } from 'react-native-elements';
 import styled from 'styled-components/native';
 import { View, Text } from 'react-native';
 import TagChip from './TagChip';
+import { useMutation,useQuery } from '@apollo/react-hooks';
+import { SIGN_ROOM_CHECK,GET_ROOM_AGE } from '../page/main/home/allroom/Query';
 
-function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen,uCount }) {
+function RoomDetail({ id, name, title, rDate, tag, open, setOpen, uCount, onSignRoom }) {
+  const [btnState, setBtnState] = useState();
+  const {data:signData} = useQuery(SIGN_ROOM_CHECK,{ variables: { roomId: id } });
+  const {data:ageData} = useQuery(GET_ROOM_AGE,{ variables: {  id } })
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if(signData){
+      setBtnState(signData?.signRoomCheck?.rslt);
+      setLoading(false)
+    }
+  }, [setBtnState,signData]);
+
   return (
     <>
       <View>
@@ -14,7 +27,7 @@ function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen
             <DtlTitle>{title}</DtlTitle>
             <DtlDescView>
               <DtlText>개설일 : {rDate}</DtlText>
-              <DtlText>참여 인원 : {String(uCount)}명 | 평균 연령 : 25세</DtlText>
+              <DtlText>참여 인원 : {String(uCount)}명 | 평균 연령 : {ageData?parseInt(ageData?.getRoomAge?.data):""}세</DtlText>
               <ListItem bottomDivider>
                 <RoomAvatar resizeMode="stretch" source={require('../Image/logo.png')} />
                 <ListItem.Content>
@@ -24,23 +37,29 @@ function RoomDetail({ navigation, id,name, title, desc,rDate, tag, open, setOpen
               </ListItem>
             </DtlDescView>
             <DtlTagView>
-               {tag ?tag?.split("#").filter(item=>item !=="").map((text,index)=><TagChip key={index} text={"#"+text}/>):null}
+              {tag
+                ? tag
+                    ?.split('#')
+                    .filter((item) => item !== '')
+                    .map((text, index) => <TagChip key={index} text={'#' + text} />)
+                : null}
             </DtlTagView>
-            <DtlBtnView>
-              <Button
-                titleStyle={{ fontWeight: 'bold' }}
-                buttonStyle={{ height: 35 }}
-                containerStyle={{ width: '48%' }}
-                title="참가 신청"
-                // loading={false}
-              />
-              <Button
-                titleStyle={{ fontWeight: 'bold' }}
-                containerStyle={{ width: '48%' }}
-                buttonStyle={{ height: 35, backgroundColor: 'red' }}
-                title="참가 취소"
-              />
-            </DtlBtnView>
+
+            <Button
+              titleStyle={{ fontWeight: 'bold' }}
+              buttonStyle={{ height: 35 }}
+              title={
+                btnState === '1'
+                  ? '입장 하기'
+                  : btnState === '2'
+                  ? '승인 대기중 (신청취소)'
+                  : btnState === '3'
+                  ? '입장 신청'
+                  : ''
+              }
+              onPress={() => onSignRoom(id, btnState,setLoading)}
+              loading={loading}
+            />
           </RoomDtlView>
         </Overlay>
       </View>
@@ -61,11 +80,7 @@ const DtlTitle = styled.Text`
   font-weight: 700;
   margin-bottom: 5px;
 `;
-const DtlBtnView = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-`;
+
 const DtlDescView = styled.View`
   height: 100px;
 `;

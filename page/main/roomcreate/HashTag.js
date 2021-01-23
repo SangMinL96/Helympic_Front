@@ -41,7 +41,7 @@ function HashTag({ route }) {
     setLoading(true)
     try {
       
-      const rslt = await saveMt({ variables: { param: { ...createData, masterid: '' } } });
+      const rslt = await saveMt({ variables: { param: { ...createData } } });
       if (rslt?.data?.saveRoom?.rslt === 'OK') {
         const formData = new FormData();
         formData.append("avatar",{name:rslt?.data?.saveRoom?.data,type:"image/jpeg",uri:avatar.uri});

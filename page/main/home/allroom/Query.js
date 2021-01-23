@@ -14,3 +14,29 @@ export const GET_ROOM = gql`
     }
   }
 `;
+
+export const GET_ROOM_AGE = gql`
+  query getRoomAge($id: Int!) {
+    getRoomAge(id: $id) {
+      rslt
+      data
+    }
+  }
+`;
+
+export const SIGN_ROOM = gql`
+  mutation signRoom($roomId: Int!) {
+    signRoom(roomId: $roomId) {
+      rslt
+      data
+    }
+  }
+`;
+export const SIGN_ROOM_CHECK = gql`
+  query signRoomCheck($roomId: Int!) {
+    signRoomCheck(roomId: $roomId) {
+      rslt
+      data
+    }
+  }
+`;
