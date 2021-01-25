@@ -1,13 +1,10 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import RoomDetail from '../../../../component/RoomDetail';
-import RoomList from '../../../../component/RoomList';
 import { useMutation } from '@apollo/react-hooks';
-import { SIGN_ROOM } from './Query';
 import Toast from 'react-native-toast-message';
-function AllRoom({ data }) {
+import RoomList from '../../../component/RoomList';
+import RoomDetail from '../../../component/RoomDetail';
+function SearchRoom({ data}) {
   const [open, setOpen] = useState(false);
-
-  const [signRoomMt] = useMutation(SIGN_ROOM);
   useEffect(() => {}, []);
 
   const onListClick = (ev) => {
@@ -48,4 +45,4 @@ function AllRoom({ data }) {
   );
 }
 
-export default AllRoom;
+export default SearchRoom;

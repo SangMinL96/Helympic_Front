@@ -15,6 +15,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native';
 import Title from '../page/main/roomcreate/Title';
 import Avatar from '../page/main/roomcreate/Avatar';
+import SearchView from '../page/main/search/Index';
 
 
 export default function Stack() {
@@ -64,6 +65,7 @@ export default function Stack() {
       {isLogined ? (
         <>
           <Stack.Screen name="Tebs" component={Tabs}  />
+          
           <Stack.Screen name="RoomCreate" component={RoomCreate} />
           <Stack.Screen name="Title" component={Title} />
           <Stack.Screen name="Avatar" component={Avatar} />
@@ -80,9 +82,3 @@ export default function Stack() {
   );
 }
 
-const MyHeader = styled.View`
-  flex: 1;
-  height: 30px;
-  width: 100%;
-  background-color: red; ;
-`;

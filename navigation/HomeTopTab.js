@@ -9,7 +9,6 @@ const TopTab = createMaterialTopTabNavigator();
 function HomeTopTab() {
   return (
     <TopTab.Navigator
-    
       tabBarOptions={{
         showIcon: true,
         showLabel: false,  

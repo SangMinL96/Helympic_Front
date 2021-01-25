@@ -18,7 +18,6 @@ const Tab = createMaterialBottomTabNavigator();
 
 function Tebs({navigation}) {
   useEffect(() => {
-  
       navigation.setOptions({
         headerLeft:()=>(
           <HeaderView>

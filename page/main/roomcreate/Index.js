@@ -7,7 +7,11 @@ import { Card } from 'react-native-elements';
 
 function RoomCreate() {
   const navigation = useNavigation();
-
+  useEffect(() => {
+    navigation.setOptions({
+      header: (ev) => console.log(ev)
+    });
+  }, [navigation]);
 
 
   return (

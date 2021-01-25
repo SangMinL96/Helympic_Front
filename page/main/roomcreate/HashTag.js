@@ -10,27 +10,21 @@ import { useMutation } from '@apollo/react-hooks';
 import { SAVE_ROOM } from './Query';
 import { ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { HOST_IP } from '../../../config';
+import { HOST_IP, UPLOAD_URL } from '../../../config';
 
 function HashTag({ route }) {
- 
   const [loading, setLoading] = useState(false);
   const [saveMt] = useMutation(SAVE_ROOM);
-  const {title,desc,avatar} = route.params;
+  const { title, desc, avatar } = route.params;
   const navigation = useNavigation();
-  const [createData, setCreateData] = useState({avatar:`avatar_${new Date().valueOf()}`,title,desc, tag: '' });
+ 
   const [chip, setChip] = useState([]);
   const chipId = useRef(1);
-  
   useEffect(() => {
-    if (chip?.length > 0) {
-      chip.map((item) => setCreateData((props) => ({ ...props, tag: props.tag + item.chips })));
-    }
-
     navigation.setOptions({
       header: () => {}
     });
-  }, [navigation, chip]);
+  }, [navigation]);
 
   const onSetChip = (chips) => {
     setChip((props) => props?.concat({ id: chipId.current, chips: `#${chips}` }));
@@ -38,28 +32,36 @@ function HashTag({ route }) {
   };
 
   const onSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      
-      const rslt = await saveMt({ variables: { param: { ...createData } } });
+      const rslt = await saveMt({
+        variables: {
+          param: {
+            avatar: `avatar_${new Date().valueOf()}`,
+            title,
+            desc,
+            tag: chip?.map((item) => item.chips).toString().replace(/,/g,"")
+          }
+        }
+      });
       if (rslt?.data?.saveRoom?.rslt === 'OK') {
         const formData = new FormData();
-        formData.append("avatar",{name:rslt?.data?.saveRoom?.data,type:"image/jpeg",uri:avatar.uri});
-        await axios.post(`${HOST_IP}upload`, formData,null);
-        setLoading(false)
+        formData.append('avatar', { name: rslt?.data?.saveRoom?.data, type: 'image/jpeg', uri: avatar.uri });
+        await axios.post(`${UPLOAD_URL}upload`, formData, null);
+        setLoading(false);
         navigation.navigate('Tebs');
-      }else{
-        setLoading(false)
+      } else {
+        setLoading(false);
       }
     } catch (err) {}
   };
   return (
     <>
       {loading ? (
-      <RoomCreateView>
-          <RoomCreateBg resizeMode="" source={require('../../../Image/hashTagImg.jpg')}>
-          <ActivityIndicator size="large" color="#d400ff" />
-         </RoomCreateBg>
+        <RoomCreateView>
+          <RoomCreateBg resizeMode="cover" source={require('../../../Image/hashTagImg.jpg')}>
+            <ActivityIndicator size="large" color="#d400ff" />
+          </RoomCreateBg>
         </RoomCreateView>
       ) : (
         <RoomCreateView>

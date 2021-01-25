@@ -39,18 +39,10 @@ function AllRoomView({ navigation }) {
       ) : (
         <AllRoomViewScreen>
           <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            {roomData?.getRoomList.map((item) => (
+            {roomData?.getRoomList?.map((item) => (
               <AllRoom
                 key={item.id}
-                id={item.id}
-                title={item.title}
-                desc={item.desc1}
-                tag={item.hash_tag}
-                masterid={item.master_id}
-                name={item.name}
-                rDate={item.rDate}
-                uCount={item.uCount}
-                avatar={item.avatar}
+                data={item}
               />
             ))}
           </ScrollView>

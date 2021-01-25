@@ -1,18 +1,18 @@
 import React from 'react';
 import {  TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { HOST_IP } from '../config';
+import { HOST_IP, UPLOAD_URL } from '../config';
 
-function RoomList({title, tag,uCount,avatar, onListClick }) {
+function RoomList({title, hash_tag,uCount,avatar, onListClick }) {
   return (
     <RoomListScreen>
       <TouchableOpacity  onPress={onListClick}>
-        <RoomAvatar  resizeMode="stretch" source={{uri:avatar?`${HOST_IP}image/?fn=${avatar}`:null}} />
+        <RoomAvatar  resizeMode="cover" source={{uri:avatar?`${UPLOAD_URL}image/?fn=${avatar}`:null}} />
       </TouchableOpacity>
       <RoomListView>
         <TouchableOpacity onPress={onListClick}>
           <ListTitle>{title}</ListTitle>
-          <ListText>{tag}</ListText>
+          <ListText>{hash_tag}</ListText>
           <ListText>{String(uCount)}명</ListText>
         </TouchableOpacity>
       </RoomListView>
