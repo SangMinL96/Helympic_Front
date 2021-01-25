@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { HeaderBackButton } from '@react-navigation/stack';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {  Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Button, Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
-function Avatar({ route }) {
+function Avatar() {
   const navigation = useNavigation();
   const [avatar, setAvatar] = useState();
   useEffect(() => {
@@ -17,6 +14,10 @@ function Avatar({ route }) {
     });
   }, [navigation]);
 
+  
+    /**
+   * 엑스포 이미지 픽커
+   */
   let openImagePickerAsync = async () => {
     try {
       let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();

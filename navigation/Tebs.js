@@ -18,7 +18,10 @@ const Tab = createMaterialBottomTabNavigator();
 
 function Tebs({navigation}) {
   useEffect(() => {
-  
+      
+    /**
+   * 기본 헤더 스타일
+   */
       navigation.setOptions({
         headerLeft:()=>(
           <HeaderView>

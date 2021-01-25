@@ -12,7 +12,11 @@ function RoomDetail({ id, name, title, rDate, tag, open, setOpen, uCount, onSign
   const {data:signData} = useQuery(SIGN_ROOM_CHECK,{ variables: { roomId: id } });
   const {data:ageData} = useQuery(GET_ROOM_AGE,{ variables: {  id } })
   const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
+
+    // signData 해당 방의 가입 상태를 나타내는 번호
     if(signData){
       setBtnState(signData?.signRoomCheck?.rslt);
       setLoading(false)
