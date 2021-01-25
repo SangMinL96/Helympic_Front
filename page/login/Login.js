@@ -18,12 +18,13 @@ export default function Login({ route, navigation }) {
   const onLogin = useLogIn();
 
   useEffect(() => {
-
+    // react-hook-form 유효성 검사에서 에러 발생시 에러메시지 출력
     if (Object.keys(errors).length >= 1) {
       console.log(errors);
       Toast.show({ text1: '빈칸을 확인해주세요.', type: 'error' });
       clearErrors();
     }
+    // 회원 가입시 네비게이션을 통해 로그인 화면으로 넘어온후 발생되는 메시지 출력
     if (route?.params?.signUp === 'OK') {
       Toast.show({ text1: '성공적으로 회원가입 되었습니다. 로그인 해주세요.' });
       navigation.setParams({ signUp: '' });
@@ -31,6 +32,10 @@ export default function Login({ route, navigation }) {
   }, [route, setValue, errors]);
 
 
+    /**
+   * 로그인 전송 함수
+   * @param {Object} data  react-hook-form 로그인시 전송되는 인풋값
+   */
   const onSubmit = async (data) => {
     setLogLoading(true)
     try {

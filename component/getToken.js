@@ -5,6 +5,13 @@ import CryptoJS from "react-native-crypto-js";
 import { HASH_KEY, HOST_IP } from '../config';
 
 
+
+
+  /**
+   * 로그인시 받은 토큰 만료시간 15분이 지난후 사용자가 
+   * Api사용시 401에러를 받으면 토큰을 새롭게 받는 함수
+   * @param {Int} error 네트워크 에러 번호 (401: 토큰인증에러)
+   */
 export const getToken = async (error, operation) => {
   if (error?.statusCode === 401) {
     try {

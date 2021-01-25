@@ -10,17 +10,16 @@ import {
   emailErr,
   lengthValid,
   lengthErr,
-  hpValid,
-  hpErr,
+ 
   pwValid,
   pwErr,
   lengthPt,
   pwPt,
   emailPt,
-  hpPt
+  
 } from '../../component/Validate';
 import { SAVE_USER, ID_CHECK, NAME_CHECK } from './Query';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import Toast from 'react-native-toast-message';
 import SelectInput from '../../component/SelectInput';
 export default function SignUp({ navigation }) {
@@ -31,22 +30,28 @@ export default function SignUp({ navigation }) {
   const [nameCheckMt] = useMutation(NAME_CHECK);
 
   useEffect(() => {
+       // react-hook-form 유효성 검사에서 에러 발생시 에러메시지 출력
     if (Object.keys(errors).length >= 1) {
       console.log(errors);
       Toast.show({ text1: '빈칸 및 형식을 확인해주세요.', type: 'error' });
       if (!errors.id) {
+       // 아이디 중복 체크
         setCheckState((props) => ({ ...props, id: false }));
       }
       if (!errors.name) {
+       // 닉네임 중복 체크
         setCheckState((props) => ({ ...props, name: false }));
       }
-
       clearErrors();
     }
   }, [errors]);
 
+   /**
+   * 회원가입 전송 함수
+   * @param {Object} data  react-hook-form 로그인시 전송되는 인풋값
+   */
   const onSubmit = async (data) => {
-    console.log(data)
+ log(data)
     if (checkState.id === true && checkState.name === true) {
       try {
         const rslt = await addMt({ variables: { param: data } });
@@ -58,7 +63,10 @@ export default function SignUp({ navigation }) {
       Toast.show({ text1: '아이디 및 닉네임 중복 확인해주세요.', type: 'info' });
     }
   };
-
+   /**
+   * 아이디 및 닉네임 중복확인시 db와 비교하여 중복 여부 확인
+   * @param {String} type 아이디, 닉네임 분류하여 중복 확인
+   */
   const onInputCheck = async (type) => {
     try {
       if (type === 'id') {

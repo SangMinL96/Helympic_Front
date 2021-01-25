@@ -27,6 +27,10 @@ export default function Stack() {
     onLogihState();
   }, [onLogihState]);
 
+    /**
+   * 사용자가 로그아웃을 직접하지 않았다면 스토리지에 
+   * 사용가능한 토큰이나 만료된 토큰을 가지고 있으면 로그인 상태 유지
+   */
   const onLogihState = async () => {
     try {
       const userInfo = await onUserInfo()

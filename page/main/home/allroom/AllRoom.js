@@ -14,6 +14,14 @@ function AllRoom({ data }) {
     setOpen(true);
   };
   
+
+    /**
+   * 로그인시 받은 토큰 만료시간 15분이 지난후 사용자가 
+   * Api사용시 401에러를 받으면 토큰을 새롭게 받는 함수
+   * @param {Int} id 방 아이디
+   * @param {String} btnState 1: 이미 참여한 방, 2: 승인 대기 3: 참가신청가능
+   * @param {Function} setLoading 버튼 클릭시 로딩상태 바꾸는 함수
+   */
   const onSignRoom =async (id,btnState,setLoading) => {
     setLoading(true)
     try{
