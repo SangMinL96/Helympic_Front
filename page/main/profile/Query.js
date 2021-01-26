@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
+
 export const GET_MY_ROOM = gql`
-  query {
+  mutation {
     getMyRoomList {
       title
       id
@@ -39,6 +40,14 @@ export const NAME_CHECK = gql`
 export const NAME_EDIT = gql`
   mutation userNameEdit($name: String) {
     userNameEdit(name: $name) {
+      rslt
+      data
+    }
+  }
+`;
+export const AVATAR_EDIT = gql`
+  mutation userAvatarEdit($avatar: String) {
+    userAvatarEdit(avatar: $avatar) {
       rslt
       data
     }

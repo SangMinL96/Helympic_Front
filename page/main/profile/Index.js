@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { View, Text, TouchableOpacity, ScrollView,ActivityIndicator } from 'react-native';
 import { useLogOut } from '../../../component/AuthProvider';
 import styled from 'styled-components/native';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery,useMutation } from '@apollo/react-hooks';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import MyInfo from './MyInfo';
@@ -12,11 +12,25 @@ import { GET_MY_ROOM, GET_PROFILE } from './Query';
 import { Card, Button } from 'react-native-elements';
 
 function Profile() {
-  const { data: roomData, loading } = useQuery(GET_MY_ROOM);
-  const { data: userData } = useQuery(GET_PROFILE);
+  const [myRoomMt] = useMutation(GET_MY_ROOM);
+  const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE);
+  const [roomData,setRoomData]=useState()
 const navigation = useNavigation()
-  useEffect(() => {}, []);
 
+  useEffect(() => {
+    onMyRoom()
+  }, [onMyRoom]);
+
+  const onMyRoom =async()=>{
+       try{
+       const rslt = await myRoomMt()
+      if(rslt){
+        setRoomData(rslt?.data?.getMyRoomList)
+      }
+       }catch(err){
+
+       }
+  }
   return (
     <>
       {loading ? (
@@ -25,7 +39,7 @@ const navigation = useNavigation()
         </View>
       ) : (
         <ProfileScreen>
-          <MyInfo {...userData?.getProfile[0]}/>
+          <MyInfo {...userData?.getProfile[0]} userDataRf={userDataRf}/>
           <Card containerStyle={{ width: '100%', borderRadius: 10, backgroundColor: '#f1f1f1' }}>
             <MyRoomView>
               <MyRoomHeader>
@@ -34,7 +48,7 @@ const navigation = useNavigation()
               </MyRoomHeader>
               <Card.Divider />
               <ScrollView>
-                {roomData.getMyRoomList?.map((item) => (
+                {roomData?.map((item) => (
                   <MyRoom key={item.id} data={item} />
                 ))}
               </ScrollView>

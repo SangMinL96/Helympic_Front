@@ -7,20 +7,25 @@ import { gql } from 'apollo-boost';
 import axios from 'axios';
 import {Alert}from "react-native"
 import { useNavigation } from '@react-navigation/native';
-import { HOST_IP } from '../../../config';
+import { HOST_IP, UPLOAD_URL } from '../../../config';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from 'react-native-elements';
-import { NAME_CHECK,NAME_EDIT } from './Query';
+import { NAME_CHECK,NAME_EDIT,AVATAR_EDIT } from './Query';
 import Toast from 'react-native-toast-message';
+import * as ImagePicker from 'expo-image-picker';
+import { ActivityIndicator } from 'react-native';
 
-
-function MyInfo({age,avatar,id,name,rDate}) {
+function MyInfo({age,avatar,id,name,rDate,userDataRf}) {
   const [nameEdit, setNameEdit] = useState(false);
   const [nameCheckMt] = useMutation(NAME_CHECK);
   const [nameEditMt] = useMutation(NAME_EDIT);
+  const [avatarEditMt] = useMutation(AVATAR_EDIT);
   const [nameState,setNameState] = useState(name)
-
-  useEffect(() => {}, [nameState]);
+  const [loading,setLoading]=useState(false)
+ 
+  useEffect(() => {
+    setNameState(name)
+  }, [name]);
 
   const onEdit =async (ev) => {
     const name =  ev.nativeEvent.text
@@ -35,10 +40,47 @@ function MyInfo({age,avatar,id,name,rDate}) {
         }
     }   
   }
+  
+/**
+   * 엑스포 이미지 픽커
+   */
+  let openImagePickerAsync = async () => {
+    try {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (permissionResult.granted === false) {
+        alert('카메라 앨범에 액세스할 수 있는 권한이 필요합니다!');
+        return;
+      }
+      let pickerResult = await ImagePicker.launchImageLibraryAsync();
+      const avatarName = `avatar_${new Date().valueOf()}`
+      const formData = new FormData();
+      formData.append('avatar', { name:avatarName , type: 'image/jpeg', uri: pickerResult.uri });
+      setLoading(true)
+      const rslt = await axios.post(`${UPLOAD_URL}upload`, formData, null);
+      if(rslt?.data ==="OK"){
+        const rslt = await avatarEditMt({variables:{avatar:avatarName}})
+       
+        if(rslt?.data?.userAvatarEdit?.rslt==="OK"){
+          userDataRf()
+          setLoading(false)
+          Toast.show({ text1: '성공적으로 프로필사진 변경하였습니다.' });
+          await axios.get(`${UPLOAD_URL}image/remove/?fn=${avatar}`);
+        }
+      }
+     
+    } catch (err) {}
+  };
   return (
+    <>
+    {loading ? (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#0059ff" />
+      </View>
+    ) : (
+
     <MyInfoScreen>
-      <TouchableOpacity onPress={(ev) => console.log(ev)}>
-        <MyAvatar resizeMode="cover" source={{ uri: `${HOST_IP}image/?fn=avatar_1611189426211` }} />
+      <TouchableOpacity onPress={openImagePickerAsync}>
+        <MyAvatar resizeMode="cover" source={{ uri: `${UPLOAD_URL}image/?fn=${avatar}` }} />
       </TouchableOpacity>
       {nameEdit ? (
         <Input
@@ -63,6 +105,8 @@ function MyInfo({age,avatar,id,name,rDate}) {
       <MyInfoText>생성날짜: {rDate} </MyInfoText>
       <MyInfoText>아이디: {id} | 나이: {age} </MyInfoText>
     </MyInfoScreen>
+      )}
+      </>
   );
 }
 
