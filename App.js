@@ -12,7 +12,9 @@ import { AuthProvider, useIsLoggedIn,useLogIn,useLogOut } from './component/Auth
 import styles from './styles';
 
 
+import AsyncStorage from "@react-native-community/async-storage";
 export default function App() {
+ 
   return (
     <ApolloProvider client={Client}>
       <ThemeProvider theme={styles}>

@@ -6,8 +6,9 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import TagChip from './TagChip';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { SIGN_ROOM_CHECK, GET_ROOM_AGE } from '../page/main/home/allroom/Query';
+import { UPLOAD_URL } from '../config';
 
-function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount, onSignRoom }) {
+function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,avatar, onSignRoom }) {
   const [btnState, setBtnState] = useState();
   const { data: signData } = useQuery(SIGN_ROOM_CHECK, { variables: { roomId: id } });
   const { data: ageData } = useQuery(GET_ROOM_AGE, { variables: { id } });
@@ -35,7 +36,7 @@ function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount, o
                   참여 인원 : {String(uCount)}명 | 평균 연령 : {ageData ? parseInt(ageData?.getRoomAge?.data) : ''}세
                 </DtlText>
                 <ListItem bottomDivider>
-                  <RoomAvatar resizeMode="stretch" source={require('../Image/logo.png')} />
+                  <RoomAvatar  resizeMode="cover" source={{ uri: avatar?`${UPLOAD_URL}image/?fn=${avatar}`:null }} />
                   <ListItem.Content>
                     <DtlBoldText>{name}</DtlBoldText>
                     <DtlText>방장</DtlText>
@@ -105,11 +106,10 @@ const DtlTagView = styled.View`
   flex-wrap: wrap;
   margin-bottom: 10px;
 `;
-const RoomAvatar = styled.ImageBackground`
+const RoomAvatar = styled.Image`
   border-radius: 50px;
   width: 40px;
   height: 40px;
   background-color: #d1d8e0;
-  border: 1px solid #a8b1bb;
   /* background-color: ${(props) => props.theme.darkGreyColor}; */
 `;
