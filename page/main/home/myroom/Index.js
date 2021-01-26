@@ -1,22 +1,68 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, {  useCallback, useEffect,  useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
-import { Avatar } from 'react-native-elements';
+import MyRoom from './MyRoom';
+import {  useMutation } from '@apollo/react-hooks';
+import { GET_MY_ROOM } from './Query';
+import { RefreshControl } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 function MyRoomView({ navigation }) {
- const test =[{id:"1"},{id:"2"}]
-  useEffect(() => {}, []);
+  const [refreshing, setRefreshing] = useState(false);
+  const [myRoomMt] = useMutation(GET_MY_ROOM);
+  const [roomData,setRoomData]=useState()
+ 
+console.log(roomData)
+  useEffect(() => {
+    onMyRoom();
+  }, [onMyRoom]);
+  const onMyRoom =async()=>{
+    try{
+    const rslt = await myRoomMt()
+   if(rslt){
+     setRoomData(rslt?.data?.getMyRoomList)
+   }
+    }catch(err){
+
+    }
+}
+  const wait = (timeout) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, timeout);
+    });
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      myRoomMt()
+      setRefreshing(false);
+    });
+  }, [myRoomMt]);
 
   return (
-    <MyRoomViewScreen>
-     
-     
-    </MyRoomViewScreen>
+    <>
+      {false ? (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color="#0059ff" />
+        </View>
+      ) : (
+        <MyRoomViewScreen>
+          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            {roomData?.map((item) => (
+              <MyRoom
+                key={item.id}
+                data={item}
+              />
+            ))}
+          </ScrollView>
+        </MyRoomViewScreen>
+      )}
+    </>
   );
 }
 
 export default MyRoomView;
 const MyRoomViewScreen = styled.View`
   ${(props) => props.theme.screen};
-  background-color: ${props=>props.theme.backColor}
+  background-color: ${(props) => props.theme.backColor};
 `;
