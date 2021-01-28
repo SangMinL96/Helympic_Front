@@ -5,22 +5,60 @@ import styled from 'styled-components/native';
 import { View, Text, ActivityIndicator } from 'react-native';
 import TagChip from './TagChip';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { SIGN_ROOM_CHECK, GET_ROOM_AGE } from '../page/main/home/allroom/Query';
+import { SIGN_ROOM_CHECK, GET_ROOM_AGE, SIGN_ROOM,SIGN_DEL } from '../page/main/home/allroom/Query';
 import { UPLOAD_URL } from '../config';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
 
-function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,avatar, onSignRoom }) {
+function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,avatar }) {
   const [btnState, setBtnState] = useState();
-  const { data: signData } = useQuery(SIGN_ROOM_CHECK, { variables: { roomId: id } });
+  const { data: signData,refetch } = useQuery(SIGN_ROOM_CHECK, { variables: { roomId: id } });
   const { data: ageData } = useQuery(GET_ROOM_AGE, { variables: { id } });
   const [loading, setLoading] = useState(true);
+  const [signRoomMt] = useMutation(SIGN_ROOM);
+  const [signDelMt] = useMutation(SIGN_DEL);
+  const navigation = useNavigation();
   
   useEffect(() => {
     if (signData) {
       setBtnState(signData?.signRoomCheck?.rslt);
       setLoading(false);
+     
     }
-  }, [setBtnState, signData]);
+  }, [setBtnState, signData,refetch]);
 
+ /**
+   * 로그인시 받은 토큰 만료시간 15분이 지난후 사용자가 
+   * Api사용시 401에러를 받으면 토큰을 새롭게 받는 함수
+   * @param {Int} id 방 아이디
+   * @param {String} btnState 1: 이미 참여한 방, 2: 승인 대기 3: 참가신청가능
+   * @param {Function} setLoading 버튼 클릭시 로딩상태 바꾸는 함수
+   */
+  const onSignRoom =async () => {
+    setLoading(true)
+    try{
+      if(btnState ==="1"){
+        setOpen(false)
+        navigation.navigate('Room',{id,title})
+      }else if(btnState ==="2"){
+        const rslt = await signDelMt({ variables: { roomId: id } });
+        if(rslt?.data?.signDel?.rslt ==="OK"){
+         Toast.show({ text1: '참가 신청 취소 되었습니다.' });
+         refetch()
+         setOpen(false);
+        }
+      }else if(btnState ==="3"){
+        const rslt = await signRoomMt({ variables: { roomId: id } });
+        if(rslt?.data?.signRoom?.rslt ==="OK"){
+         Toast.show({ text1: '참가 신청 완료 되었습니다.' });
+         refetch()
+         setOpen(false);
+        }
+      }
+    }catch(err){
+
+    }
+  };
   return (
     <>
       <View>
@@ -64,7 +102,7 @@ function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,av
                     ? '입장 신청'
                     : ''
                 }
-                onPress={() => onSignRoom(id, btnState, setLoading)}
+                onPress={onSignRoom}
               />
             </RoomDtlView>
           )}

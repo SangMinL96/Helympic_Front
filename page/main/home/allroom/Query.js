@@ -32,6 +32,14 @@ export const SIGN_ROOM = gql`
     }
   }
 `;
+export const SIGN_DEL = gql`
+  mutation signDel($roomId: Int!) {
+    signDel(roomId: $roomId) {
+      rslt
+      data
+    }
+  }
+`;
 export const SIGN_ROOM_CHECK = gql`
   query signRoomCheck($roomId: Int!) {
     signRoomCheck(roomId: $roomId) {
