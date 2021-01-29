@@ -5,17 +5,12 @@ import Feeds from './Feeds';
 
 
 
-function Feed({ navigation }) {
-  useEffect(() => {
-   
-  }, []);
-
+function Feed({ route }) {
  
 
- 
   return (
     <FeedScreen>
-      <Feeds />
+      <Feeds {...route?.params} />
     </FeedScreen>
   );
 }
