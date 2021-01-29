@@ -8,13 +8,13 @@ import { ThemeProvider } from "styled-components";
 import Toast from 'react-native-toast-message';
 import Stack from './navigation/Stack';
 import Client from './Apollo/Client';
-import { AuthProvider, useIsLoggedIn,useLogIn,useLogOut } from './component/AuthProvider';
+import { AuthProvider, useIsLoggedIn,useLogIn, } from './component/AuthProvider';
 import styles from './styles';
 
 
-import AsyncStorage from "@react-native-community/async-storage";
 export default function App() {
  
+
   return (
     <ApolloProvider client={Client}>
       <ThemeProvider theme={styles}>

@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }) => {
     console.log("asdf")
     try {
       const info = await CryptoJS.AES.encrypt(JSON.stringify(userInfo), HASH_KEY).toString()
-      await AsyncStorage.setItem("user", info);
       setIsLoggedIn(true);
+      await AsyncStorage.setItem("user", info);
     } catch (e) {
       console.log(e);
     }
