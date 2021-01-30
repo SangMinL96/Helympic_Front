@@ -36,6 +36,7 @@ const authMiddleware = new ApolloLink(async(operation, forward) => {
 
 export default new ApolloClient({
   cache: new InMemoryCache({
+    dataIdFromObject: o => (o._id ? `${o.__typename}:${o._id}`: null),
     typePolicies: {
       Query: {
         fields: {
@@ -43,6 +44,13 @@ export default new ApolloClient({
             merge(existing, incoming) {
               return incoming;
             },
+            
+          },
+          getRoomVideo: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+            
           },
         },
       },
