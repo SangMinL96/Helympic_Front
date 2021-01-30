@@ -1,10 +1,10 @@
 import { Video } from 'expo-av';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import VideoPlayer from 'expo-video-player';
 import { ScrollView } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Upload from './Upload';
 import { GET_ROOM_VIDEO } from './Query';
@@ -12,11 +12,13 @@ import { UPLOAD_URL } from '../../../../config';
 import { ActivityIndicator } from 'react-native';
 import { View } from 'react-native';
 function Feeds({ name, id }) {
-  const { data, loading,refetch } = useMutation(GET_ROOM_VIDEO, {
+  const { data, loading,refetch } = useQuery(GET_ROOM_VIDEO, {
     variables: { roomId: id },
     fetchPolicy:"network-only"
   });
-  const [data,setData]= useState()
+
+  
+console.log(data?.getRoomVideo)
   return (
     <FeedsView>
       {loading ? (
