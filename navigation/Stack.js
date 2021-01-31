@@ -12,6 +12,7 @@ import Title from '../page/main/roomcreate/Title';
 import Avatar from '../page/main/roomcreate/Avatar';
 import RoomTopTab from './RoomTopTab';
 import Record from '../page/main/room/record/Index';
+import Setting from '../page/main/room/setting/Index';
 
 
 export default function Stack() {
@@ -71,6 +72,9 @@ export default function Stack() {
           <Stack.Screen name="Desc" component={Desc} />
           <Stack.Screen name="Record" component={Record} />
           <Stack.Screen name="Room" component={RoomTopTab} />
+          <Stack.Screen name="Setting" options={{
+            title:"방 설정"
+          }} component={Setting} />
         </>
       ) : (
         <>

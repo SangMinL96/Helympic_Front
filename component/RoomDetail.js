@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,avatar }) {
   const [btnState, setBtnState] = useState();
-  const { data: signData,refetch } = useQuery(SIGN_ROOM_CHECK, { variables: { roomId: id } });
+  const { data: signData,refetch } = useQuery(SIGN_ROOM_CHECK, {fetchPolicy:"network-only", variables: { roomId: id }, });
   const { data: ageData } = useQuery(GET_ROOM_AGE, { variables: { id } });
   const [loading, setLoading] = useState(true);
   const [signRoomMt] = useMutation(SIGN_ROOM);
