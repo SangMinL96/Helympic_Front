@@ -9,10 +9,9 @@ import { ActivityIndicator } from 'react-native';
 
 function MyRoomView({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  const [myRoomMt] = useMutation(GET_MY_ROOM);
+  const [myRoomMt] = useMutation(GET_MY_ROOM,{fetchPolicy:"no-cache"});
   const [roomData,setRoomData]=useState()
  
-console.log(roomData)
   useEffect(() => {
     onMyRoom();
   }, [onMyRoom]);

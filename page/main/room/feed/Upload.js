@@ -29,7 +29,6 @@ function Upload({id,refetch}) {
       let pickerResult = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: 'Videos'
       });
-      console.log(pickerResult)
       const formData = new FormData();
       formData.append('video', { name, type: 'video/mp4', uri: pickerResult.uri });
       setLoading(true);
@@ -47,7 +46,7 @@ function Upload({id,refetch}) {
 
   return (
         <Button
-        buttonStyle={{ backgroundColor: '#9b9b9b' }}
+        buttonStyle={{ backgroundColor: '#9b9b9b',width:"100%" }}
         icon={<Icon name="movie-filter-outline" size={15} color="#0FF" />}
         onPress={openImagePickerAsync}
         loading={loading}

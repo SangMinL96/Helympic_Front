@@ -18,7 +18,7 @@ function Feeds({ name, id }) {
   });
 
   
-console.log(data?.getRoomVideo)
+
   return (
     <FeedsView>
       {loading ? (

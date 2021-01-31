@@ -13,7 +13,7 @@ function SearchView({ navigation }) {
   const [searchData,setSearchData]=useState()
   const [loading,setLoading]=useState(false)
   const [searchMt] = useMutation(SEARCH_ROOM)
- console.log(searchData)
+
 
   useEffect(() => {
     

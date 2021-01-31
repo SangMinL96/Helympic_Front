@@ -8,7 +8,7 @@ function Record({ navigation,route }) {
 console.log(route)
   return (
     <RecordScreen>
-      <Text>{route.params.title}</Text>
+      <Text>{"Asdfsa"}</Text>
     </RecordScreen>
   );
 }
