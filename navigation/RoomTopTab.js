@@ -7,10 +7,18 @@ import Feed from '../page/main/room/feed/Index';
 import { HeaderBackButton } from '@react-navigation/stack';
 import styled from 'styled-components/native';
 import {TouchableOpacity} from "react-native"
+import Toast from 'react-native-toast-message';
 
 const TopTab = createMaterialTopTabNavigator();
 
 function RoomTopTab({ navigation, route }) {
+const onSetting = ()=>{
+  if(route.params.master === "OK"){
+    navigation.navigate('Setting', { id: route.params.id})
+  }else{
+    Toast.show({ text1: '마스터 권한이 없습니다.', type: 'error'});
+  }
+}
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props) => (
@@ -27,7 +35,7 @@ function RoomTopTab({ navigation, route }) {
       headerRight: () => (
       <TouchableOpacity>
         <MaterialCommunityIcons
-          onPress={() => navigation.navigate('Setting', { id: route.params.id})}
+          onPress={onSetting}
           name="cog-outline"
           color={'gray'}
           size={26}
@@ -48,7 +56,7 @@ function RoomTopTab({ navigation, route }) {
     >
       <TopTab.Screen
         initialRouteName={route.params.id}
-        name="Drawer"
+        name="Record"
         initialParams={{ id: route.params.id, title: route.params.title }}
         component={Record}
         options={{

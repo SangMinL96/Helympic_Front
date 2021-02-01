@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ScrollView,ActivityIndicator } from 'reac
 import { useLogOut } from '../../../component/AuthProvider';
 import styled from 'styled-components/native';
 import { useQuery,useMutation } from '@apollo/react-hooks';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import MyInfo from './MyInfo';
 import MyRoom from './MyRoom';
@@ -14,12 +13,11 @@ function Profile() {
   const [myRoomMt] = useMutation(GET_MY_ROOM);
   const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE);
   const [roomData,setRoomData]=useState()
-  const logOut = useLogOut()
 const navigation = useNavigation()
 
   useEffect(() => {
     onMyRoom()
-    logOut()
+
   }, [onMyRoom]);
 
   const onMyRoom =async()=>{

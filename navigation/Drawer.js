@@ -30,10 +30,10 @@ function CustomDrawerContent(props) {
 
 const Drawers = createDrawerNavigator();
 
-function Drawer({route}) {
+function Drawer() {
   return (
     <Drawers.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawers.Screen name="RoomTop" component={RoomTopTab} />
+      <Drawers.Screen name="RoomDrawer" component={Record} />
    
     </Drawers.Navigator>
   );

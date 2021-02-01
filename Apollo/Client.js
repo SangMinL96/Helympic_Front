@@ -52,6 +52,11 @@ export default new ApolloClient({
             },
             
           },
+          getMyRoomList: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
         },
       },
     }

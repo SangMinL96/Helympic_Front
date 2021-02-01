@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 function Record({ navigation,route }) {
 
-console.log(route)
+
   return (
     <RecordScreen>
       <Text>{"Asdfsa"}</Text>

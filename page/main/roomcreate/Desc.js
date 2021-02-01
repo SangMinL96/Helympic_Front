@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-  
+import Toast from 'react-native-toast-message';
+
 function Desc({route}) {
   const navigation = useNavigation();
   const [desc,setDesc] = useState()
@@ -26,7 +26,7 @@ function Desc({route}) {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>설명</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('HashTag',{avatar,title,desc})}>
+          <TouchableOpacity onPress={() =>desc? navigation.navigate('HashTag',{avatar,title,desc}):Toast.show({ text1: '설명을 입력해주세요.', type: 'error' })}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>

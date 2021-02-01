@@ -9,7 +9,6 @@ import { Icon } from '@99xt/first-born';
 import { LOGIN_USER } from './Query';
 import { useMutation } from '@apollo/react-hooks';
 import { useLogIn } from '../../component/AuthProvider';
-import { onUserInfo } from '../../component/utils';
 
 export default function Login({ route, navigation }) {
   const [logLoading,setLogLoading]=useState(false)

@@ -1,23 +1,47 @@
 import { Video } from 'expo-av';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import VideoPlayer from 'expo-video-player';
 import { ScrollView } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Upload from './Upload';
-import { GET_ROOM_VIDEO } from './Query';
+import { GET_ROOM_VIDEO, SAVE_LIKE } from './Query';
 import { UPLOAD_URL } from '../../../../config';
 import { ActivityIndicator } from 'react-native';
-import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, TouchableOpacity } from 'react-native';
+
 function Feeds({ name, id }) {
-  const { data, loading,refetch } = useQuery(GET_ROOM_VIDEO, {
+  const { data, loading, refetch } = useQuery(GET_ROOM_VIDEO, {
     variables: { roomId: id },
-    fetchPolicy:"network-only"
+    fetchPolicy: 'network-only'
   });
+  const [likeMt] = useMutation(SAVE_LIKE);
+  const onDelLike = async (videoId) => {
+    try {
 
   
+      const rslt = await likeMt({ variables: { type: 'del', videoId } });
+
+      if (rslt?.data?.saveLike?.rslt === 'OK') {
+        refetch();
+    
+      }
+    } catch (err) {}
+  };
+  const onSaveLike = async (videoId) => {
+    try {
+ 
+      const rslt = await likeMt({ variables: { type: 'save', videoId } });
+  
+      if (rslt?.data?.saveLike?.rslt === 'OK') {
+        refetch();
+      
+      }
+    } catch (err) {}
+  };
 
   return (
     <FeedsView>
@@ -28,7 +52,7 @@ function Feeds({ name, id }) {
       ) : (
         <>
           <ScrollView style={{ flex: 1, width: '100%' }}>
-            {data?.getRoomVideo?.map((item,index) => (
+            {data?.getRoomVideo?.map((item, index) => (
               <VideoView key={index}>
                 <ListItem containerStyle={{ backgroundColor: '#f8f8f8', padding: 10 }}>
                   <RoomAvatar
@@ -39,10 +63,14 @@ function Feeds({ name, id }) {
                     <DtlBoldText>{item?.name}</DtlBoldText>
                     <DtlText>{item?.id}</DtlText>
                   </ListItem.Content>
+                  <LikeView>
+                    <Icon name="heart" size={25} color="red" />
+                    <Text style={{ color: 'gray' }}>{item.vCount}</Text>
+                  </LikeView>
                 </ListItem>
                 <VideoPlayer
                   height={280}
-                  textStyle={{ fontSize: 13,color:"#e9e9e9" }}
+                  textStyle={{ fontSize: 13, color: '#e9e9e9' }}
                   showFullscreenButton={false}
                   videoProps={{
                     shouldPlay: false,
@@ -53,6 +81,23 @@ function Feeds({ name, id }) {
                   }}
                   inFullscreen={true}
                 />
+                {item.checked === 1 ? (
+                  <Button
+                    buttonStyle={{ height: 50 }}
+                    icon={<Icon name="heart" size={25} color="red" />}
+                    onPress={() => onDelLike(item.videoId)}
+                    title="좋아요"
+                    
+                  />
+                ) : (
+                  <Button
+                    buttonStyle={{ height: 50 }}
+                    icon={<Icon name="heart-outline" size={25} color="red" />}
+                    onPress={() => onSaveLike(item.videoId)}
+                    title="좋아요"
+                  
+                  />
+                )}
               </VideoView>
             ))}
           </ScrollView>
@@ -68,7 +113,7 @@ const FeedsView = styled.View`
   flex: 1;
 `;
 const VideoView = styled.View`
-  height: 430px;
+  height: 380px;
   margin-top: 20px;
   background-color: #f8f8f8;
 `;
@@ -86,4 +131,18 @@ const RoomAvatar = styled.Image`
   height: 50px;
   background-color: #d1d8e0;
   /* background-color: ${(props) => props.theme.darkGreyColor}; */
+`;
+const LikeView = styled.View`
+  margin-top: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+const LikeBtn = styled.View`
+  border: 1px solid #dddddd;
+  padding: 11px;
+  background-color: #dddddd;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

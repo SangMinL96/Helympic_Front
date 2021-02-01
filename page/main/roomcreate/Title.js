@@ -6,10 +6,12 @@ import styled from 'styled-components/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Toast from 'react-native-toast-message';
+
 function Title({route}) {
   const navigation = useNavigation();
   const [title,setTitle] = useState()
-  // const avatar = route.params.avatar;
+  const avatar = route.params.avatar;
   useEffect(() => {
     navigation.setOptions({
       header: () => {}
@@ -24,7 +26,7 @@ function Title({route}) {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>타이틀</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Desc',{avatar,title})}>
+          <TouchableOpacity onPress={() =>title? navigation.navigate('Desc',{avatar,title}):Toast.show({ text1: '타이틀을 입력해주세요.', type: 'error' })}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>

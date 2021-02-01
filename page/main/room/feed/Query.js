@@ -12,8 +12,20 @@ export const GET_ROOM_VIDEO = gql`
     getRoomVideo(roomId: $roomId) {
         name
         id
+        videoId
         avatar
         video
+        vCount
+        checked
+    }
+  }
+`;
+
+export const SAVE_LIKE = gql`
+   mutation saveLike($type: String , $videoId:Int) {
+    saveLike(type: $type,videoId:$videoId) {
+      rslt
+      data
     }
   }
 `;

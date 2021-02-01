@@ -51,3 +51,11 @@ export const SAVE_ROOM_SIGN = gql`
     }
   }
 `;
+export const ROOM_MASTER_CHECK = gql`
+  query roomMasterCheck($roomId:Int) {
+    roomMasterCheck(roomId: $roomId) {
+      rslt
+      data
+    }
+  }
+`;

@@ -9,6 +9,7 @@ import { SIGN_ROOM_CHECK, GET_ROOM_AGE, SIGN_ROOM,SIGN_DEL } from '../page/main/
 import { UPLOAD_URL } from '../config';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
+import { ROOM_MASTER_CHECK } from '../page/main/room/setting/Query';
 
 function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,avatar }) {
   const [btnState, setBtnState] = useState();
@@ -18,7 +19,11 @@ function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,av
   const [signRoomMt] = useMutation(SIGN_ROOM);
   const [signDelMt] = useMutation(SIGN_DEL);
   const navigation = useNavigation();
-  
+  const { data:masterCheck } = useQuery(ROOM_MASTER_CHECK, {
+    variables: { roomId: id },
+    fetchPolicy: 'no-cache'
+  });
+ 
   useEffect(() => {
     if (signData) {
       setBtnState(signData?.signRoomCheck?.rslt);
@@ -39,7 +44,7 @@ function RoomDetail({ id, name, title, rDate, hash_tag, open, setOpen, uCount,av
     try{
       if(btnState ==="1"){
         setOpen(false)
-        navigation.navigate('Room',{id,title})
+        navigation.navigate('Room',{id,title,master:masterCheck?.roomMasterCheck?.rslt})
       }else if(btnState ==="2"){
         const rslt = await signDelMt({ variables: { roomId: id } });
         if(rslt?.data?.signDel?.rslt ==="OK"){
