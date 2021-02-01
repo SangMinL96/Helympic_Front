@@ -15,7 +15,7 @@ const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE);
 
   return (
     <ChatScreen>
-      <Chatting {...userData?.getProfile[0]}/>
+      <Chatting {...userData?.getProfile[0]} roomId={route.params.id}/>
     </ChatScreen>
   );
 }

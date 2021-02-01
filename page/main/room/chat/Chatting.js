@@ -1,37 +1,69 @@
 import { Input } from '@99xt/first-born';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styled from 'styled-components/native';
 import { UPLOAD_URL } from '../../../../config';
-function Chatting({ name, avatar }) {
- 
-  useEffect(()=>{
-   
-  },[])
-  const onChat = () => {
-   
+import socketio from 'socket.io-client';
+
+function Chatting({ id, name, avatar, roomId }) {
+  const socket = socketio.connect('http://124.5.186.110:3814');
+  socket.emit('joinRoom', String(roomId));
+  const [chatList, setChatList] = useState([]);
+
+  console.log(chatList);
+  // console.log(chatList?.split(","))
+  const onChating = (ev) => {
+    const msg = ev.nativeEvent.text;
+    socket.emit('chatting', { roomId: String(roomId), avatar, id, name, msg });
   };
+  useEffect(() => {
+    //방 아이디에 따라 조인
+    socket.on('message', (data) => {
+      setChatList((props) => props.concat(data));
+    });
+    socket.on('joinData', (data) => {
+      console.log(data)
+      data.map(item=>setChatList(props=>props.concat(item)))
+    });
+    return () => {
+      socket.off('message');
+     socket.off('joinData');
+    };
+  }, [setChatList]);
+
   return (
     <ChatView>
       <ScrollView>
-
-          
-        <ListItem containerStyle={{ backgroundColor: '#ebebee',padding:10 }}>
-          <RoomAvatar resizeMode="cover" source={{ uri: avatar ? `${UPLOAD_URL}image/?fn=${avatar}` : null }} />
-          <ListItem.Content>
-            <DtlBoldText>{name}</DtlBoldText>
-            <DtlText>ㅋㅋㅋㅋㅋ그거 아니zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz지</DtlText>
-          </ListItem.Content>
-        </ListItem>
-
-
-        <ListItem  containerStyle={{ backgroundColor: '#ebebee',padding:10,justifyContent:"flex-end",flexDirection:"row"}}>
-            <DtlMyText >ㅋㅋㅋㅋㅋ그거 아니지</DtlMyText>
-        </ListItem>
+        {chatList?.map((item, index) =>
+          item.id !== id ? (
+            <ListItem key={index} containerStyle={{ backgroundColor: '#ebebee', padding: 10 }}>
+              <RoomAvatar
+                resizeMode="cover"
+                source={{ uri: item.avatar ? `${UPLOAD_URL}image/?fn=${item.avatar}` : null }}
+              />
+              <ListItem.Content>
+                <DtlBoldText>{item.name}</DtlBoldText>
+                <DtlText>{item.msg}</DtlText>
+              </ListItem.Content>
+            </ListItem>
+          ) : (
+            <ListItem
+              key={index}
+              containerStyle={{
+                backgroundColor: '#ebebee',
+                padding: 10,
+                justifyContent: 'flex-end',
+                flexDirection: 'row'
+              }}
+            >
+              <DtlMyText>{item.msg}</DtlMyText>
+            </ListItem>
+          )
+        )}
       </ScrollView>
-      <Input  onSubmitEditing={onChat} placeholder="방 제목, 닉네임, 태그" />
+      <Input onSubmitEditing={onChating} placeholder="방 제목, 닉네임, 태그" />
     </ChatView>
   );
 }
