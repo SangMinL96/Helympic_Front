@@ -53,3 +53,15 @@ export const AVATAR_EDIT = gql`
     }
   }
 `;
+
+export const GET_MY_VIDEO = gql`
+  query {
+    getMyVideo {
+      title
+      avatar
+      video
+      rDate
+      vCount
+    }
+  }
+`;

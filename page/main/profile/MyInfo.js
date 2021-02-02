@@ -142,6 +142,7 @@ const MyAvatar = styled.Image`
   border-radius: 50px;
   width: 110px;
   height: 110px; ;
+  background-color: #dddddd;
 `;
 const MyName = styled.Text`
   font-size: 18px;
@@ -153,24 +154,4 @@ const MyInfoText = styled.Text`
   color: gray;
 `;
 
-const InputBox = styled.View`
-  position: relative;
-`;
 
-const InputBtn = styled.TouchableOpacity`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: 3%;
-  top: 22px;
-  width: 52px;
-  background-color: #3498db;
-  height: 20px;
-  border-radius: 10px;
-`;
-const InputText = styled.Text`
-  font-size: 10px;
-  font-weight: 500;
-  color: white;
-`;
