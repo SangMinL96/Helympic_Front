@@ -2,13 +2,14 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import React, { useEffect } from 'react';
 import styled from "styled-components/native"
 import { View, Text, TouchableOpacity } from 'react-native';
+import Records from './Records';
 
 function Record({ navigation,route }) {
 
 
   return (
     <RecordScreen>
-      <Text>{"Asdfsa"}</Text>
+       <Records {...route?.params} />
     </RecordScreen>
   );
 }
