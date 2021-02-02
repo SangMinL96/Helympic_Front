@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 export const GET_ROOM = gql`
-  query {
-    getRoomList {
+query getRoomList($type: String) {
+  getRoomList(type:$type) {
       title
       id
       desc1
@@ -13,6 +13,7 @@ export const GET_ROOM = gql`
       avatar
     }
   }
+  
 `;
 
 export const GET_ROOM_AGE = gql`
