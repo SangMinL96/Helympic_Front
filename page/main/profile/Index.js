@@ -6,12 +6,16 @@ import { useQuery,useMutation } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import MyInfo from './MyInfo';
 import MyRoom from './MyRoom';
-import { GET_MY_ROOM, GET_PROFILE } from './Query';
+import { GET_MY_ROOM, GET_MY_VIDEO, GET_PROFILE } from './Query';
 import { Card, Button } from 'react-native-elements';
+import { TouchableWithoutFeedback } from 'react-native';
+import MyVideo from './MyVideo';
 
 function Profile() {
   const [myRoomMt] = useMutation(GET_MY_ROOM);
-  const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE);
+  const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE,{fetchPolicy:"cache-and-network"});
+  const { data: videoData } = useQuery(GET_MY_VIDEO,{fetchPolicy:"cache-and-network"});
+
   const [roomData,setRoomData]=useState()
 const navigation = useNavigation()
 
@@ -39,20 +43,34 @@ const navigation = useNavigation()
       ) : (
         <ProfileScreen>
           <MyInfo {...userData?.getProfile[0]} userDataRf={userDataRf}/>
-          <Card containerStyle={{ width: '100%', borderRadius: 10, backgroundColor: '#f1f1f1' }}>
+           <ScrollView style={{width:"100%"}}>
+          <Card containerStyle={{  borderRadius: 10, backgroundColor: '#f1f1f1' }}>
             <MyRoomView>
               <MyRoomHeader>
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>나의 방</Text>
                 <Button onPress={()=>navigation.navigate('Search')} buttonStyle={{ width: 50, height: 23 }} title="방 추가" titleStyle={{ fontSize: 10 }} />
               </MyRoomHeader>
               <Card.Divider />
-              <ScrollView>
-                {roomData?.map((item) => (
-                  <MyRoom key={item.id} data={item} />
+              <ScrollView nestedScrollEnabled={true}>
+                {roomData?.map((item,index) => (
+                  <MyRoom key={index} data={item} />
                 ))}
               </ScrollView>
             </MyRoomView>
           </Card>
+          
+            <MyVideoView>
+              <Card containerStyle={{  borderRadius: 10, backgroundColor: '#f1f1f1' }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>나의 동영상</Text>
+              </Card>
+              <ScrollView style={{ width: '100%'}} nestedScrollEnabled={true}>
+                {videoData?.getMyVideo?.map((item,index) => (
+                  <MyVideo key={index} data={item} />
+                ))}
+              </ScrollView>
+            </MyVideoView>
+          
+           </ScrollView>
         </ProfileScreen>
       )}
     </>
@@ -62,13 +80,18 @@ const navigation = useNavigation()
 export default Profile;
 
 const ProfileScreen = styled.View`
-  ${(props) => props.theme.screen};
+ 
   background-color: ${(props) => props.theme.backColor};
 `;
 
 const MyRoomView = styled.View`
   width: 100%;
   height: 300px;
+`;
+const MyVideoView = styled.View`
+flex: 1;
+margin-bottom: 200px;
+  height: 1000px;
 `;
 const MyRoomHeader = styled.View`
   width: 98%;
