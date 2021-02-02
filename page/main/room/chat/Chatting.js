@@ -4,19 +4,23 @@ import { Text } from 'react-native';
 import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styled from 'styled-components/native';
-import { UPLOAD_URL } from '../../../../config';
+import { REDIS_URL, UPLOAD_URL } from '../../../../config';
 import socketio from 'socket.io-client';
+import { View,ActivityIndicator } from 'react-native';
+
 
 function Chatting({ id, name, avatar, roomId }) {
-  const socket = socketio.connect('http://124.5.186.110:3814');
+  const socket = socketio.connect(REDIS_URL);
   socket.emit('joinRoom', String(roomId));
   const [chatList, setChatList] = useState([]);
+  const [value,setValue]=useState()
 
-  console.log(chatList);
-  // console.log(chatList?.split(","))
+
+ 
   const onChating = (ev) => {
     const msg = ev.nativeEvent.text;
     socket.emit('chatting', { roomId: String(roomId), avatar, id, name, msg });
+    setValue("")
   };
   useEffect(() => {
     //방 아이디에 따라 조인
@@ -24,7 +28,7 @@ function Chatting({ id, name, avatar, roomId }) {
       setChatList((props) => props.concat(data));
     });
     socket.on('joinData', (data) => {
-      console.log(data)
+      setChatList([])
       data.map(item=>setChatList(props=>props.concat(item)))
     });
     return () => {
@@ -35,7 +39,7 @@ function Chatting({ id, name, avatar, roomId }) {
 
   return (
     <ChatView>
-      <ScrollView>
+      <ScrollView contentOffset={{ x: 0, y: -100 }} >
         {chatList?.map((item, index) =>
           item.id !== id ? (
             <ListItem key={index} containerStyle={{ backgroundColor: '#ebebee', padding: 10 }}>
@@ -63,7 +67,8 @@ function Chatting({ id, name, avatar, roomId }) {
           )
         )}
       </ScrollView>
-      <Input onSubmitEditing={onChating} placeholder="방 제목, 닉네임, 태그" />
+  
+      <Input onChangeText={(text)=>setValue(text)} value={value||""} onSubmitEditing={onChating} placeholder="...message" />
     </ChatView>
   );
 }

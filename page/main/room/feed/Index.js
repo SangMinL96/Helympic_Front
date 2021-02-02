@@ -17,6 +17,6 @@ function Feed({ route }) {
 
 export default Feed;
 const FeedScreen = styled.View`
-  ${(props) => props.theme.screen};
+flex: 1;
   background-color: ${(props) => props.theme.backColor};
 `;

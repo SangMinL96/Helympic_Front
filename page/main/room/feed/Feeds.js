@@ -21,24 +21,19 @@ function Feeds({ name, id }) {
   const [likeMt] = useMutation(SAVE_LIKE);
   const onDelLike = async (videoId) => {
     try {
-
-  
       const rslt = await likeMt({ variables: { type: 'del', videoId } });
 
       if (rslt?.data?.saveLike?.rslt === 'OK') {
         refetch();
-    
       }
     } catch (err) {}
   };
   const onSaveLike = async (videoId) => {
     try {
- 
       const rslt = await likeMt({ variables: { type: 'save', videoId } });
-  
+
       if (rslt?.data?.saveLike?.rslt === 'OK') {
         refetch();
-      
       }
     } catch (err) {}
   };
@@ -51,9 +46,12 @@ function Feeds({ name, id }) {
         </View>
       ) : (
         <>
-          <ScrollView style={{ flex: 1, width: '100%' }}>
-            {data?.getRoomVideo?.map((item, index) => (
-              <VideoView key={index}>
+          <ScrollView style={{ flex: 1, width: '100%',paddingBottom:10 }}>
+            <View style={{margin:10 }}>
+              <Text style={{ textAlign:"center",fontWeight: 'bold', fontSize: 20 }}>3대 측정 동영상</Text>
+            </View>
+            {data?.getRoomVideo ?data?.getRoomVideo?.map((item, index) => (
+              <VideoView  key={index}>
                 <ListItem containerStyle={{ backgroundColor: '#f8f8f8', padding: 10 }}>
                   <RoomAvatar
                     resizeMode="cover"
@@ -87,7 +85,6 @@ function Feeds({ name, id }) {
                     icon={<Icon name="heart" size={25} color="red" />}
                     onPress={() => onDelLike(item.videoId)}
                     title="좋아요"
-                    
                   />
                 ) : (
                   <Button
@@ -95,11 +92,11 @@ function Feeds({ name, id }) {
                     icon={<Icon name="heart-outline" size={25} color="red" />}
                     onPress={() => onSaveLike(item.videoId)}
                     title="좋아요"
-                  
                   />
                 )}
               </VideoView>
-            ))}
+            )):<Text style={{textAlign:"center"}}>동영상이 존재하지 않습니다. 등록해주세요.</Text>}
+         
           </ScrollView>
           <Upload id={id} refetch={refetch} />
         </>
@@ -110,11 +107,13 @@ function Feeds({ name, id }) {
 
 export default Feeds;
 const FeedsView = styled.View`
+ 
   flex: 1;
 `;
 const VideoView = styled.View`
   height: 380px;
-  margin-top: 20px;
+  margin-bottom: 25px;
+  margin-top: 18px;
   background-color: #f8f8f8;
 `;
 const DtlText = styled.Text`
