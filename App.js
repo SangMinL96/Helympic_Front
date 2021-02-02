@@ -21,7 +21,7 @@ export default function App() {
         <AuthProvider >
           <NavigationContainer>
               <Stack />
-              <Toast ref={(ref) => Toast.setRef(ref)} position={"top"}  topOffset={80} visibilityTime={1800} />
+              <Toast ref={(ref) => Toast.setRef(ref)} position={"top"}  topOffset={80} visibilityTime={1000} />
             </NavigationContainer>
         </AuthProvider>
       </ThemeProvider>

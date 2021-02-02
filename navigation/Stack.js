@@ -71,6 +71,7 @@ export default function Stack() {
           <Stack.Screen name="Avatar" component={Avatar} />
           <Stack.Screen name="Desc" component={Desc} />
           <Stack.Screen name="Record" component={Record} />
+          <Stack.Screen name="HashTag" component={HashTag} />
           <Stack.Screen name="Room" component={RoomTopTab} />
           <Stack.Screen name="Setting" options={{
             title:"방 설정"
