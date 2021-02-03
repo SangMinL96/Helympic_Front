@@ -66,7 +66,6 @@ export default function Stack() {
       {isLogined ? (
         <>
           <Stack.Screen name="Tebs" component={Tabs}  />
-          <Stack.Screen name="RoomCreate" component={RoomCreate} />
           <Stack.Screen name="Title" component={Title} />
           <Stack.Screen name="Avatar" component={Avatar} />
           <Stack.Screen name="Desc" component={Desc} />

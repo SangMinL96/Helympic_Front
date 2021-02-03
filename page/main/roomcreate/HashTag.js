@@ -25,6 +25,7 @@ function HashTag({ route }) {
       header: () => {}
     });
   }, [navigation]);
+  console.log(avatar)
 
   const onSetChip = (chips) => {
     setChip((props) => props?.concat({ id: chipId.current, chips: `#${chips}` }));
@@ -46,8 +47,9 @@ function HashTag({ route }) {
       });
       if (rslt?.data?.saveRoom?.rslt === 'OK') {
         const formData = new FormData();
-        formData.append('avatar', { name: rslt?.data?.saveRoom?.data, type: 'image/jpeg', uri: avatar.uri });
-        await axios.post(`${UPLOAD_URL}upload`, formData, null);
+        formData.append('avatar', { name: rslt?.data?.saveRoom?.data, type: 'image/jpeg', uri: avatar });
+       const reslt= await axios.post(`${UPLOAD_URL}upload`, formData, null);
+       console.log(reslt)
         setLoading(false);
         navigation.navigate('Tebs');
       } else {

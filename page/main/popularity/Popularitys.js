@@ -14,7 +14,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { UPLOAD_URL } from '../../../config';
 
 function Popularitys() {
-  const { data, loading, refetch } = useQuery(GET_POP_VIDEO, {
+  const { data, loading, refetch,networkStatus } = useQuery(GET_POP_VIDEO, {
     fetchPolicy: 'cache-and-network'
   });
   const [likeMt] = useMutation(SAVE_LIKE);
@@ -39,7 +39,7 @@ function Popularitys() {
 
   return (
     <PopularitysView>
-      {loading ? (
+      {loading ===true && networkStatus === 1 ? (
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ActivityIndicator size="large" color="#0059ff" />
         </View>

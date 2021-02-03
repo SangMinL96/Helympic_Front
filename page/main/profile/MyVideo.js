@@ -13,40 +13,51 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { UPLOAD_URL } from '../../../config';
 
-function MyVideo({data}) {
+function MyVideo({ data }) {
   return (
-    <VideoView >
-      <ListItem containerStyle={{ backgroundColor: '#f8f8f8', padding: 10 }}>
-        <RoomAvatar resizeMode="cover" source={{ uri: data.avatar ? `${UPLOAD_URL}image/?fn=${data.avatar}` : null }} />
-        <ListItem.Content>
-          <DtlBoldText>{data?.title}</DtlBoldText>
-          <DtlText>{data?.rDate}</DtlText>
-        </ListItem.Content>
-        <LikeView>
-          <Icon name="heart" size={25} color="red" />
-          <Text style={{ color: 'gray' }}>{data.vCount}</Text>
-        </LikeView>
-      </ListItem>
-      <VideoPlayer
-        height={280}
-        textStyle={{ fontSize: 13, color: '#e9e9e9' }}
-        showFullscreenButton={false}
-        videoProps={{
-          shouldPlay: false,
-          resizeMode:Video.RESIZE_MODE_CONTAIN,
-          source: {
-            uri: data?.video ? `${UPLOAD_URL}video/?fn=${data.video}` : null
-          }
-        }}
-      />
-    </VideoView>
+    <>
+      {data?.video === null ? (
+        <View style={{margin:20}}>
+          <Text style={{fontSize:15}}>동영상이 존재하지 않습니다.</Text>
+        </View>
+      ) : (
+        <VideoView>
+          <ListItem containerStyle={{ backgroundColor: '#f8f8f8', padding: 10 }}>
+            <RoomAvatar
+              resizeMode="cover"
+              source={{ uri: data.avatar ? `${UPLOAD_URL}image/?fn=${data.avatar}` : null }}
+            />
+            <ListItem.Content>
+              <DtlBoldText>{data?.title}</DtlBoldText>
+              <DtlText>{data?.rDate}</DtlText>
+            </ListItem.Content>
+            <LikeView>
+              <Icon name="heart" size={25} color="red" />
+              <Text style={{ color: 'gray' }}>{data.vCount}</Text>
+            </LikeView>
+          </ListItem>
+          <VideoPlayer
+            height={280}
+            textStyle={{ fontSize: 13, color: '#e9e9e9' }}
+            showFullscreenButton={false}
+            videoProps={{
+              shouldPlay: false,
+              resizeMode: Video.RESIZE_MODE_CONTAIN,
+              source: {
+                uri: data?.video ? `${UPLOAD_URL}video/?fn=${data.video}` : null
+              }
+            }}
+          />
+        </VideoView>
+      )}
+    </>
   );
 }
 
 export default MyVideo;
 
 const VideoView = styled.View`
-width: 100%;
+  width: 100%;
   height: 380px;
   margin-bottom: 25px;
   margin-top: 10px;

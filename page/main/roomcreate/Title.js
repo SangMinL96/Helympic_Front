@@ -12,6 +12,7 @@ function Title({route}) {
   const navigation = useNavigation();
   const [title,setTitle] = useState()
   const avatar = route.params.avatar;
+
   useEffect(() => {
     navigation.setOptions({
       header: () => {}

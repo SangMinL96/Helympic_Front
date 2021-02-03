@@ -13,7 +13,7 @@ export const SAVE_USER = gql`
   mutation signUpUser( $param: userSaveParam) {
     signUpUser(param: $param) {
       rslt
-      text
+      data
     }
   }
 `;
@@ -21,7 +21,7 @@ export const ID_CHECK = gql`
   mutation idCheck( $id: String!) {
     idCheck( id: $id) {
       rslt
-      text
+      data
     }
   }
 `;
@@ -29,7 +29,7 @@ export const NAME_CHECK = gql`
   mutation nameCheck( $name: String!) {
     nameCheck( name: $name) {
       rslt
-      text
+      data
     }
   }
 `;

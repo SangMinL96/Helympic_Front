@@ -12,6 +12,7 @@ function Desc({route}) {
   const [desc,setDesc] = useState()
   const avatar = route.params.avatar;
   const title = route.params.title;
+ 
   useEffect(() => {
     navigation.setOptions({
       header: () => {}

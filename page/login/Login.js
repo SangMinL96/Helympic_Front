@@ -25,7 +25,7 @@ export default function Login({ route, navigation }) {
     }
     // 회원 가입시 네비게이션을 통해 로그인 화면으로 넘어온후 발생되는 메시지 출력
     if (route?.params?.signUp === 'OK') {
-      Toast.show({ text1: '성공적으로 회원가입 되었습니다. 로그인 해주세요.' });
+      Toast.show({ text1: '성공적으로 회원가입 되었습니다.' });
       navigation.setParams({ signUp: '' });
     }
   }, [route, setValue, errors]);

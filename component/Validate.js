@@ -29,4 +29,4 @@ export const hpValid = (text)=>{
     return regex.test(text); 
 }
 export const hpPt = /^\d{3}\d{3,4}\d{4}$/
-export const hpErr = "잘못된 번호 입니다. 예)010-0000-0000"
+export const hpErr = "잘못된 번호 입니다. 예)01000000000"

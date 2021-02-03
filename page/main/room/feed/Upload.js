@@ -36,9 +36,9 @@ function Upload({id,refetch}) {
       if (rslt?.data === 'OK') {
         const rslt = await roomVideoMt({ variables: { param:{video:name,roomId:id} } });
         if (rslt?.data?.saveRoomVideo?.rslt === 'OK') {
-            refetch()
           setLoading(false);
           Toast.show({ text1: '성공적으로 동영상 등록 하였습니다.' });
+          refetch()
         }
       }
     } catch (err) {}

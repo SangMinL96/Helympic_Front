@@ -18,6 +18,7 @@ function Feeds({ name, id }) {
     variables: { roomId: id },
     fetchPolicy: 'network-only'
   });
+  console.log(data)
   const [likeMt] = useMutation(SAVE_LIKE);
   const onDelLike = async (videoId) => {
     try {

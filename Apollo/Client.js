@@ -46,6 +46,12 @@ export default new ApolloClient({
             },
             
           },
+          getMyVideo: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+            
+          },
           getRoomVideo: {
             merge(existing, incoming) {
               return incoming;

@@ -10,6 +10,7 @@ import Toast from 'react-native-toast-message';
 function Avatar() {
   const navigation = useNavigation();
   const [avatar, setAvatar] = useState();
+
   useEffect(() => {
     navigation.setOptions({
       header: () => {}
@@ -29,8 +30,7 @@ function Avatar() {
       }
 
       let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
-      await setAvatar(pickerResult);
+       setAvatar(pickerResult);
     } catch (err) {}
   };
 
@@ -42,7 +42,7 @@ function Avatar() {
             <MaterialCommunityIcons name="close" color={'white'} size={26} />
           </TouchableOpacity>
           <Text style={{ color: 'white', fontSize: 18 }}>이미지</Text>
-          <TouchableOpacity onPress={() =>avatar? navigation.navigate('Title', { avatar:avatar.url }):Toast.show({ text1: '이미지를 등록해주세요.', type: 'error' })}>
+          <TouchableOpacity onPress={() =>avatar? navigation.navigate('Title', { avatar:avatar?.uri }):Toast.show({ text1: '이미지를 등록해주세요.', type: 'error' })}>
             <Text style={{ color: 'white', fontSize: 18 }}>다음</Text>
           </TouchableOpacity>
         </RoomCreateHeader>

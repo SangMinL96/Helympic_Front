@@ -32,7 +32,7 @@ export default function SignUp({ navigation }) {
   useEffect(() => {
        // react-hook-form 유효성 검사에서 에러 발생시 에러메시지 출력
     if (Object.keys(errors).length >= 1) {
-      console.log(errors);
+  
       Toast.show({ text1: '빈칸 및 형식을 확인해주세요.', type: 'error' });
       if (!errors.id) {
        // 아이디 중복 체크
@@ -44,6 +44,7 @@ export default function SignUp({ navigation }) {
       }
       clearErrors();
     }
+    return ()=> clearErrors();
   }, [errors]);
 
    /**
@@ -51,7 +52,6 @@ export default function SignUp({ navigation }) {
    * @param {Object} data  react-hook-form 로그인시 전송되는 인풋값
    */
   const onSubmit = async (data) => {
- log(data)
     if (checkState.id === true && checkState.name === true) {
       try {
         const rslt = await addMt({ variables: { param: data } });
@@ -92,7 +92,7 @@ export default function SignUp({ navigation }) {
         }
       }
     } catch (err) {
-      console.log(err);
+      console.dir(err);
 
       setCheckState((props) => ({ ...props, id: false, name: false }));
     }

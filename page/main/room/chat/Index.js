@@ -8,7 +8,10 @@ import { GET_PROFILE } from './Query';
 
 
 function Chat({ navigation,route }) {
-const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE);
+const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE, {
+  fetchPolicy: 'network-only'
+});
+
   useEffect(() => {
    
   }, []);

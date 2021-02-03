@@ -15,7 +15,6 @@ function Chatting({ id, name, avatar, roomId }) {
   const [chatList, setChatList] = useState([]);
   const [value,setValue]=useState()
 
-
  
   const onChating = (ev) => {
     const msg = ev.nativeEvent.text;
