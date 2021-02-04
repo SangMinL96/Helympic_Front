@@ -26,6 +26,7 @@ function MyInfo({ age, avatar, id, name, rDate, userDataRf }) {
 
   useEffect(() => {
     setNameState(name);
+   
   }, [name]);
 
   const onEdit = async (ev) => {
@@ -53,21 +54,24 @@ function MyInfo({ age, avatar, id, name, rDate, userDataRf }) {
         return;
       }
       let pickerResult = await ImagePicker.launchImageLibraryAsync();
-      const avatarName = `avatar_${new Date().valueOf()}`;
-      const formData = new FormData();
-      formData.append('avatar', { name: avatarName, type: 'image/jpeg', uri: pickerResult.uri });
-      setLoading(true);
-      const rslt = await axios.post(`${UPLOAD_URL}upload`, formData, null);
-      if (rslt?.data === 'OK') {
-        const rslt = await avatarEditMt({ variables: { avatar: avatarName } });
-
-        if (rslt?.data?.userAvatarEdit?.rslt === 'OK') {
-          userDataRf();
-          setLoading(false);
-          Toast.show({ text1: '성공적으로 프로필사진 변경하였습니다.' });
-          await axios.get(`${UPLOAD_URL}image/remove/?fn=${avatar}`);
+      if(!pickerResult?.cancelled){
+        const avatarName = `avatar_${new Date().valueOf()}`;
+        const formData = new FormData();
+        formData.append('avatar', { name: avatarName, type: 'image/jpeg', uri: pickerResult.uri });
+        setLoading(true);
+        const rslt = await axios.post(`${UPLOAD_URL}upload`, formData, null);
+        if (rslt?.data === 'OK') {
+          const rslt = await avatarEditMt({ variables: { avatar: avatarName } });
+  
+          if (rslt?.data?.userAvatarEdit?.rslt === 'OK') {
+            userDataRf();
+            setLoading(false);
+            Toast.show({ text1: '성공적으로 프로필사진 변경하였습니다.' });
+            await axios.get(`${UPLOAD_URL}image/remove/?fn=${avatar}`);
+          }
         }
       }
+     
     } catch (err) {}
   };
   const onLogOut = () => {

@@ -6,7 +6,7 @@ import Chat from '../page/main/room/chat/Index';
 import Feed from '../page/main/room/feed/Index';
 import { HeaderBackButton } from '@react-navigation/stack';
 import styled from 'styled-components/native';
-import {TouchableOpacity} from "react-native"
+import {Text, TouchableOpacity} from "react-native"
 import Toast from 'react-native-toast-message';
 
 const TopTab = createMaterialTopTabNavigator();
@@ -33,7 +33,8 @@ const onSetting = ()=>{
         </RoomHeaderView>
       ),
       headerRight: () => (
-      <TouchableOpacity>
+      <TouchableOpacity style={{flexDirection:"row",alignItems:"center"}}>
+        <Text style={{fontSize:10,color:'gray'}}>승인 설정</Text>
         <MaterialCommunityIcons
           onPress={onSetting}
           name="cog-outline"

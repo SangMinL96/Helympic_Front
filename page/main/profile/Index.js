@@ -13,7 +13,7 @@ import MyVideo from './MyVideo';
 
 function Profile() {
   const [myRoomMt] = useMutation(GET_MY_ROOM);
-  const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE,{fetchPolicy:"cache-and-network"});
+  const { data: userData,loading,refetch:userDataRf } = useQuery(GET_PROFILE,{fetchPolicy:"network-only"});
   const { data: videoData } = useQuery(GET_MY_VIDEO,{fetchPolicy:"cache-and-network"});
 
   const [roomData,setRoomData]=useState()
@@ -42,7 +42,9 @@ const navigation = useNavigation()
         </View>
       ) : (
         <ProfileScreen>
-          <MyInfo {...userData?.getProfile[0]} userDataRf={userDataRf}/>
+          <View style={{height:200}}>
+            <MyInfo {...userData?.getProfile[0]} userDataRf={userDataRf}/>
+          </View>
            <ScrollView style={{width:"100%"}}>
           <Card containerStyle={{  borderRadius: 10, backgroundColor: '#f1f1f1' }}>
             <MyRoomView>
@@ -91,7 +93,7 @@ const MyRoomView = styled.View`
 const MyVideoView = styled.View`
 flex: 1;
 margin-bottom: 200px;
-  height: 1000px;
+padding-bottom: 100px;
 `;
 const MyRoomHeader = styled.View`
   width: 98%;

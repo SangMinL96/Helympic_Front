@@ -58,7 +58,6 @@ export default MyVideo;
 
 const VideoView = styled.View`
   width: 100%;
-  height: 380px;
   margin-bottom: 25px;
   margin-top: 10px;
   background-color: #f8f8f8;
@@ -80,14 +79,6 @@ const RoomAvatar = styled.Image`
 `;
 const LikeView = styled.View`
   margin-top: 10px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-const LikeBtn = styled.View`
-  border: 1px solid #dddddd;
-  padding: 11px;
-  background-color: #dddddd;
   flex-direction: row;
   justify-content: center;
   align-items: center;
