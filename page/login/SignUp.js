@@ -44,7 +44,7 @@ export default function SignUp({ navigation }) {
       }
       clearErrors();
     }
-    return ()=> clearErrors();
+   
   }, [errors]);
 
    /**
@@ -55,10 +55,13 @@ export default function SignUp({ navigation }) {
     if (checkState.id === true && checkState.name === true) {
       try {
         const rslt = await addMt({ variables: { param: data } });
+        console.log(rslt)
         if (rslt?.data?.signUpUser?.rslt === 'OK') {
           navigation.navigate('Login', { id: data.id, signUp: 'OK' });
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err)
+      }
     } else {
       Toast.show({ text1: '아이디 및 닉네임 중복 확인해주세요.', type: 'info' });
     }
@@ -126,16 +129,7 @@ export default function SignUp({ navigation }) {
           rule={true}
           pt={pwPt}
         />
-        <TextInput
-          control={control}
-          label={'비밀번호 확인'}
-          name={'pw'}
-          pwType={true}
-          valid={pwValid}
-          errMsg={pwErr}
-          rule={true}
-          pt={pwPt}
-        />
+       
         <TextInput
           control={control}
           label={'이메일'}

@@ -8,7 +8,6 @@ import { GET_MY_ROOM } from './Query';
 function MyRoom({ data }) {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {}, []);
 
   const onListClick = (ev) => {
     setOpen(true);

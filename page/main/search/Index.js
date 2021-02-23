@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList, SafeAreaView, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 
 import { useMutation } from '@apollo/react-hooks';
@@ -29,6 +29,11 @@ function SearchView({ navigation, route }) {
       }
     } catch (err) {}
   };
+  const renderItem = useCallback(
+    (item) => <SearchRoom key={item.item.id} data={item.item}  />,
+    []
+  );
+  const keyExtractor = useCallback((item) => item.id.toString(), []);
 
   return (
     <>
@@ -44,11 +49,13 @@ function SearchView({ navigation, route }) {
             onSubmitEditing={onSearchRoom}
             placeholder="방 제목, 닉네임, 태그"
           />
-          <ScrollView>
-            {searchData?.map((item) => (
-              <SearchRoom key={item.id} data={item} rDate={item.rDate} uCount={item.uCount} avatar={item.avatar} />
-            ))}
-          </ScrollView>
+          <SafeAreaView>
+            <FlatList
+              data={searchData || []}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+            />
+          </SafeAreaView>
         </SearchViewScreen>
       )}
     </>

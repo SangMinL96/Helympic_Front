@@ -24,6 +24,7 @@ function Chatting({ id, name, avatar, roomId }) {
   useEffect(() => {
     //방 아이디에 따라 조인
     socket.on('message', (data) => {
+      console.log(data,"dsafass")
       setChatList((props) => props.concat(data));
     });
     socket.on('joinData', (data) => {

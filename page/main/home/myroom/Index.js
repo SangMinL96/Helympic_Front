@@ -1,5 +1,5 @@
 import React, {  useCallback, useEffect,  useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, FlatList, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import MyRoom from './MyRoom';
 import {  useMutation } from '@apollo/react-hooks';
@@ -37,7 +37,9 @@ function MyRoomView({ navigation }) {
       setRefreshing(false);
     });
   }, [myRoomMt]);
-
+  const renderItem = useCallback((item) => <MyRoom key={item.id}data={item.item}/>, [])
+  const keyExtractor = useCallback((item) => item.id.toString(), [])
+ 
   return (
     <>
       {false ? (
@@ -46,14 +48,14 @@ function MyRoomView({ navigation }) {
         </View>
       ) : (
         <MyRoomViewScreen>
-          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            {roomData?.map((item) => (
-              <MyRoom
-                key={item.id}
-                data={item}
-              />
-            ))}
-          </ScrollView>
+          <SafeAreaView>
+            <FlatList
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+              data={roomData||[]}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+            />
+          </SafeAreaView>
         </MyRoomViewScreen>
       )}
     </>

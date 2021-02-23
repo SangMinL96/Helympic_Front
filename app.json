@@ -2,7 +2,7 @@
   "expo": {
     "name": "헬림픽",
     "slug": "Helypic",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,13 +18,13 @@
     ],
     "ios": {
       "bundleIdentifier": "com.lsm.helympic",
-      "buildNumber": "1.0.0",
+      "buildNumber": "3.0.0",
       "supportsTablet": true,
       "requireFullScreen": true
     },
     "android": {
       "package":"com.lsm.helympic",
-      "versionCode": 2
+      "versionCode": 4
     }
   }
 }

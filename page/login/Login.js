@@ -29,7 +29,7 @@ export default function Login({ route, navigation }) {
       navigation.setParams({ signUp: '' });
     }
   }, [route, setValue, errors]);
-
+ 
 
     /**
    * 로그인 전송 함수
@@ -39,14 +39,22 @@ export default function Login({ route, navigation }) {
     setLogLoading(true)
     try {
       const rslt = await loginMt({ variables: { param: data } });
+      console.log(rslt)
       const userInfo = rslt.data.user;
-      if(userInfo){
+      if(userInfo.token !==""){
         setLogLoading(false)
+        onLogin(userInfo);
+      }else{
+        setLogLoading(false)
+        Toast.show({text1:"아이디 및 비밀번호를 확인해주세요.", type: 'error'})
+        console.log("안돼")
       }
-     onLogin(userInfo);
+    
     
       // navigation.navigate("Main")
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (
